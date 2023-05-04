@@ -16,12 +16,12 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\Geo\Desktop\an3\sem 2\IP\Homematic\Modul Web\HomematicApp\HomematicApp
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Geo/Desktop/an3/sem 2/IP/Homematic/Modul Web/HomematicApp/HomematicApp/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+[C:/Users/Geo/Desktop/an3/sem 2/IP/Homematic/Modul Web/HomematicApp/HomematicApp/Views/Authentication/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aGVudGljYXRpb25cTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Geo/Desktop/an3/sem 2/IP/Homematic/Modul Web/HomematicApp/HomematicApp/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+[C:/Users/Geo/Desktop/an3/sem 2/IP/Homematic/Modul Web/HomematicApp/HomematicApp/Views/Authentication/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aGVudGljYXRpb25cUmVnaXN0ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Geo/Desktop/an3/sem 2/IP/Homematic/Modul Web/HomematicApp/HomematicApp/Views/Shared/Error.cshtml]

@@ -1,0 +1,59 @@
+﻿@model HomematicApp.Models.UserModel
+
+@{
+    ViewData["Title"] = "Register Page";
+    ViewData["firstname-placeholder"] = "First Name";
+    ViewData["lastname-placeholder"] = "Last Name";
+    ViewData["email-placeholder"] = "Email";
+    ViewData["password-placeholder"] = "Password";
+    ViewData["cnp-placeholder"] = "Enter CNP";
+    ViewData["device-placeholder"] = "Enter IMEI code";
+    ViewData["register-button"] = "Register";
+
+}
+
+<h2>Register your account</h2>
+
+
+<form class="user" method="post" asp-action="RegisterUser">
+    <div class="form-group row">
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <input type="text" class="form-control form-control-user" asp-for="FirstName"
+                   placeholder=@ViewData["firstname-placeholder"]>
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control form-control-user" asp-for="LastName"
+                   placeholder=@ViewData["lastname-placeholder"]>
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6 mb-3 mb-sm-0">
+        <input type="email" class="form-control form-control-user" asp-for="Email"
+               placeholder=@ViewData["email-placeholder"]>
+        <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control form-control-user"
+                   asp-for="DeviceId" placeholder=@ViewData["device-placeholder"]>
+            <span asp-validation-for="DeviceId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <input type="password" class="form-control form-control-user"
+                   asp-for="Password" placeholder=@ViewData["password-placeholder"]>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control form-control-user"
+                   asp-for="CNP" placeholder=@ViewData["cnp-placeholder"]>
+            <span asp-validation-for="CNP" class="text-danger"></span>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-user btn-block">
+        @ViewData["register-button"]
+    </button>
+</form>
+
