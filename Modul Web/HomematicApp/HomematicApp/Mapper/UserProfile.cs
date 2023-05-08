@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using HomematicApp.Models;
+using HomematicApp.Context.DbModels;
+using HomematicApp.ViewModels;
 
 namespace HomematicApp.Mapper
 {

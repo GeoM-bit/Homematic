@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="8.0.33" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HomematicApp.Context\HomematicApp.Context.csproj" />
+    <ProjectReference Include="..\HomematicApp.Domain\HomematicApp.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

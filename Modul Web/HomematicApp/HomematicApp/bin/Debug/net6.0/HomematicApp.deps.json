@@ -10,9 +10,12 @@
         "dependencies": {
           "AutoMapper": "12.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
+          "HomematicApp.DataAccess": "1.0.0",
+          "HomematicApp.Domain": "1.0.0",
           "Microsoft.EntityFrameworkCore": "7.0.5",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.13",
-          "MySql.Data": "8.0.33"
+          "MySql.Data": "8.0.33",
+          "Pomelo.EntityFrameworkCore.MySql": "6.0.2"
         },
         "runtime": {
           "HomematicApp.dll": {}
@@ -904,6 +907,18 @@
         }
       },
       "Microsoft.EntityFrameworkCore.Analyzers/7.0.5": {},
+      "Microsoft.EntityFrameworkCore.Relational/6.0.7": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "7.0.5",
+          "Microsoft.Extensions.Configuration.Abstractions": "6.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.EntityFrameworkCore.Relational.dll": {
+            "assemblyVersion": "6.0.7.0",
+            "fileVersion": "6.0.722.31501"
+          }
+        }
+      },
       "Microsoft.Extensions.Caching.Abstractions/7.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "7.0.0"
@@ -928,6 +943,11 @@
             "assemblyVersion": "7.0.0.0",
             "fileVersion": "7.0.22.51805"
           }
+        }
+      },
+      "Microsoft.Extensions.Configuration.Abstractions/6.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "7.0.0"
         }
       },
       "Microsoft.Extensions.DependencyInjection/7.0.0": {
@@ -1211,6 +1231,14 @@
           }
         }
       },
+      "MySqlConnector/2.1.2": {
+        "runtime": {
+          "lib/net6.0/MySqlConnector.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.1.2.0"
+          }
+        }
+      },
       "NETStandard.Library/1.6.1": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.1",
@@ -1365,6 +1393,19 @@
           "lib/netstandard2.0/NuGet.Versioning.dll": {
             "assemblyVersion": "6.3.1.1",
             "fileVersion": "6.3.1.1"
+          }
+        }
+      },
+      "Pomelo.EntityFrameworkCore.MySql/6.0.2": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "6.0.7",
+          "Microsoft.Extensions.DependencyInjection": "7.0.0",
+          "MySqlConnector": "2.1.2"
+        },
+        "runtime": {
+          "lib/net6.0/Pomelo.EntityFrameworkCore.MySql.dll": {
+            "assemblyVersion": "6.0.2.0",
+            "fileVersion": "6.0.2.0"
           }
         }
       },
@@ -2228,6 +2269,33 @@
           "System.Threading": "4.3.0",
           "System.Xml.ReaderWriter": "4.3.0"
         }
+      },
+      "HomematicApp.Context/1.0.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "7.0.5",
+          "Pomelo.EntityFrameworkCore.MySql": "6.0.2"
+        },
+        "runtime": {
+          "HomematicApp.Context.dll": {}
+        }
+      },
+      "HomematicApp.DataAccess/1.0.0": {
+        "dependencies": {
+          "HomematicApp.Context": "1.0.0",
+          "HomematicApp.Domain": "1.0.0",
+          "MySql.Data": "8.0.33"
+        },
+        "runtime": {
+          "HomematicApp.DataAccess.dll": {}
+        }
+      },
+      "HomematicApp.Domain/1.0.0": {
+        "dependencies": {
+          "HomematicApp.Context": "1.0.0"
+        },
+        "runtime": {
+          "HomematicApp.Domain.dll": {}
+        }
       }
     }
   },
@@ -2482,6 +2550,13 @@
       "path": "microsoft.entityframeworkcore.analyzers/7.0.5",
       "hashPath": "microsoft.entityframeworkcore.analyzers.7.0.5.nupkg.sha512"
     },
+    "Microsoft.EntityFrameworkCore.Relational/6.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0uo4fPDHutMbd9AJJEKl2q/2fYuFGA8tEBE2fQeQFaNDd+F/aUjaXc1FUD84J7Wcax8WP40rZo1E0u9A0yPPZw==",
+      "path": "microsoft.entityframeworkcore.relational/6.0.7",
+      "hashPath": "microsoft.entityframeworkcore.relational.6.0.7.nupkg.sha512"
+    },
     "Microsoft.Extensions.Caching.Abstractions/7.0.0": {
       "type": "package",
       "serviceable": true,
@@ -2495,6 +2570,13 @@
       "sha512": "sha512-xpidBs2KCE2gw1JrD0quHE72kvCaI3xFql5/Peb2GRtUuZX+dYPoK/NTdVMiM67Svym0M0Df9A3xyU0FbMQhHw==",
       "path": "microsoft.extensions.caching.memory/7.0.0",
       "hashPath": "microsoft.extensions.caching.memory.7.0.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Configuration.Abstractions/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-qWzV9o+ZRWq+pGm+1dF+R7qTgTYoXvbyowRoBxQJGfqTpqDun2eteerjRQhq5PQ/14S+lqto3Ft4gYaRyl4rdQ==",
+      "path": "microsoft.extensions.configuration.abstractions/6.0.0",
+      "hashPath": "microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512"
     },
     "Microsoft.Extensions.DependencyInjection/7.0.0": {
       "type": "package",
@@ -2636,6 +2718,13 @@
       "path": "mysql.data/8.0.33",
       "hashPath": "mysql.data.8.0.33.nupkg.sha512"
     },
+    "MySqlConnector/2.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JVokQTUNN3WHAu9Vw8ieeq1dXTFokJiig5P0VJ4f439UxRrsPo6SaVWC8Zdm6mkPeQFhZ0/9afdWa02EY/1j/w==",
+      "path": "mysqlconnector/2.1.2",
+      "hashPath": "mysqlconnector.2.1.2.nupkg.sha512"
+    },
     "NETStandard.Library/1.6.1": {
       "type": "package",
       "serviceable": true,
@@ -2712,6 +2801,13 @@
       "sha512": "sha512-T/igBDLXCd+pH3YTWgGVNvYSOwbwaT30NyyM9ONjvlHlmaUjKBJpr9kH0AeL+Ado4EJsBhU3qxXVc6lyrpRcMw==",
       "path": "nuget.versioning/6.3.1",
       "hashPath": "nuget.versioning.6.3.1.nupkg.sha512"
+    },
+    "Pomelo.EntityFrameworkCore.MySql/6.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KvlZ800CnEuEGnxj5OT1fCKGjQXxW5kpPlCP91JqBYG+2Z3927eqXmlX6LLKUt4swqE8ZsEQ+Zkpab8bqstf4g==",
+      "path": "pomelo.entityframeworkcore.mysql/6.0.2",
+      "hashPath": "pomelo.entityframeworkcore.mysql.6.0.2.nupkg.sha512"
     },
     "Portable.BouncyCastle/1.9.0": {
       "type": "package",
@@ -3391,6 +3487,21 @@
       "sha512": "sha512-5zJ0XDxAIg8iy+t4aMnQAu0MqVbqyvfoUVl1yDV61xdo3Vth45oA2FoY4pPkxYAH5f8ixpmTqXeEIya95x0aCQ==",
       "path": "system.xml.xdocument/4.3.0",
       "hashPath": "system.xml.xdocument.4.3.0.nupkg.sha512"
+    },
+    "HomematicApp.Context/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "HomematicApp.DataAccess/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "HomematicApp.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

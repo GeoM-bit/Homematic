@@ -1,13 +1,16 @@
-﻿using HomematicApp.Abstractions;
-using HomematicApp.Models;
+﻿using HomematicApp.Context.Context;
+using HomematicApp.Context.DbModels;
+using HomematicApp.Domain.Abstractions;
 using MySql.Data.MySqlClient;
 
 namespace HomematicApp.Repositories
 {
     public class AuthenticationRepository : IAuthenticationRepository
     {
-        public AuthenticationRepository()
+        private readonly HomematicContext _context;
+        public AuthenticationRepository(HomematicContext context)
         {
+            _context = context;
         }
         public Task<string> Login(User user)
         {
@@ -21,8 +24,9 @@ namespace HomematicApp.Repositories
 
         public async Task<bool> Register(User user)
         {
-            user.IsAdmin = false;
-
+            
+            user.Is_Admin = false;
+            /*
             MySql.Data.MySqlClient.MySqlConnection conn;
             string conString = "server=127.0.0.1;database=homematic;uid=root;pwd=";
             conn = new MySql.Data.MySqlClient.MySqlConnection();
@@ -38,7 +42,11 @@ namespace HomematicApp.Repositories
 
             conn.Close();
 
-            return rowsAffected == 1;
+            return rowsAffected == 1;*/
+            _context.Users.Add(user);
+
+            return await _context.SaveChangesAsync() == 1;
+
         }
 
         public Task<bool> ResetPassword(string deviceId, string newPassword)

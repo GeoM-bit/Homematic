@@ -1,4 +1,4 @@
-﻿@model HomematicApp.Models.UserModel
+﻿@model HomematicApp.ViewModels.UserModel
 
 @{
     ViewData["Title"] = "Register Page";
@@ -18,14 +18,14 @@
 <form class="user" method="post" asp-action="RegisterUser">
     <div class="form-group row">
         <div class="col-sm-6 mb-3 mb-sm-0">
-            <input type="text" class="form-control form-control-user" asp-for="FirstName"
+            <input type="text" class="form-control form-control-user" asp-for="First_Name"
                    placeholder=@ViewData["firstname-placeholder"]>
-            <span asp-validation-for="FirstName" class="text-danger"></span>
+            <span asp-validation-for="First_Name" class="text-danger"></span>
         </div>
         <div class="col-sm-6">
-            <input type="text" class="form-control form-control-user" asp-for="LastName"
+            <input type="text" class="form-control form-control-user" asp-for="Last_Name"
                    placeholder=@ViewData["lastname-placeholder"]>
-            <span asp-validation-for="LastName" class="text-danger"></span>
+            <span asp-validation-for="Last_Name" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group row">
@@ -36,8 +36,8 @@
         </div>
         <div class="col-sm-6">
             <input type="text" class="form-control form-control-user"
-                   asp-for="DeviceId" placeholder=@ViewData["device-placeholder"]>
-            <span asp-validation-for="DeviceId" class="text-danger"></span>
+                   asp-for="Device_Id" placeholder=@ViewData["device-placeholder"]>
+            <span asp-validation-for="Device_Id" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group row">

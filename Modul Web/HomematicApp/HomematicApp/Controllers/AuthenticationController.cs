@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using HomematicApp.Abstractions;
-using HomematicApp.Models;
+using HomematicApp.Context.DbModels;
+using HomematicApp.Domain.Abstractions;
+using HomematicApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomematicApp.Controllers
@@ -8,8 +9,8 @@ namespace HomematicApp.Controllers
     public class AuthenticationController : Controller
     {
         
-        private IAuthenticationRepository authenticationRepository;
-        private IMapper mapper;
+        private readonly IAuthenticationRepository authenticationRepository;
+        private readonly IMapper mapper;
         public AuthenticationController(IAuthenticationRepository _authenticationRepository, IMapper _mapper)
         {
             authenticationRepository = _authenticationRepository;

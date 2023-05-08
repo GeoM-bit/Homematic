@@ -1,6 +1,7 @@
-﻿using HomematicApp.Models;
+﻿
+using HomematicApp.Context.DbModels;
 
-namespace HomematicApp.Abstractions
+namespace HomematicApp.Domain.Abstractions
 {
     public interface IAuthenticationRepository
     {
