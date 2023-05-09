@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\HomematicApp.DataAccess\HomematicApp.DataAccess.csproj" />
     <ProjectReference Include="..\HomematicApp.Domain\HomematicApp.Domain.csproj" />
+    <ProjectReference Include="..\HomematicApp.Service\HomematicApp.Service.csproj" />
   </ItemGroup>
 
 </Project>

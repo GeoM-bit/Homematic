@@ -1,6 +1,7 @@
 using HomematicApp.Context.Context;
 using HomematicApp.Domain.Abstractions;
 using HomematicApp.Repositories;
+using HomematicApp.Service.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,10 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews(); 
 builder.Services.AddMvc();
 builder.Services.AddControllers();
+builder.Services.AddOptions();
 builder.Services.AddDbContext<HomematicContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("HomematicConnectionString"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("HomematicConnectionString"))));
 
 builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
+builder.Services.AddScoped<IHashService, HashService>();
 builder.Services.AddAutoMapper(typeof(Program));
 var app = builder.Build();
 

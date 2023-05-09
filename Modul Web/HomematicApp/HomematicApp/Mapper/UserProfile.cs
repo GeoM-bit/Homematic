@@ -8,6 +8,7 @@ namespace HomematicApp.Mapper
     {
         public UserProfile() {
             CreateMap<UserModel, User>();
+            CreateMap<LoginModel, LoginUser>();
         }
     }
 }

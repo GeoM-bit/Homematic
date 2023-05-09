@@ -9,7 +9,5 @@ namespace HomematicApp.ViewModels
         public string Email { get; set; }
         public string Password { get; set; }
         public string CNP { get; set; }
-        public bool? FailedRegister { get; set; }
-
     }
 }

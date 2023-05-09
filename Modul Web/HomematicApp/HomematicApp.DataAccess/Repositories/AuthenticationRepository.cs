@@ -1,20 +1,32 @@
 ﻿using HomematicApp.Context.Context;
 using HomematicApp.Context.DbModels;
 using HomematicApp.Domain.Abstractions;
-using MySql.Data.MySqlClient;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace HomematicApp.Repositories
 {
     public class AuthenticationRepository : IAuthenticationRepository
     {
         private readonly HomematicContext _context;
-        public AuthenticationRepository(HomematicContext context)
+        private readonly IHashService _hashService;
+        public AuthenticationRepository(HomematicContext context, IHashService hashService)
         {
             _context = context;
+            _hashService = hashService;
         }
-        public Task<string> Login(User user)
+        public async Task<bool> Login(LoginUser loginUser)
         {
-            throw new NotImplementedException();
+            var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginUser.Email);
+
+            if (dbUser != null)
+            {
+                if (_hashService.VerifyPassword(loginUser.Password, dbUser.Password))
+                    return true;
+                return false;
+            }
+
+            return false;
         }
 
         public Task<bool> Logout()
@@ -24,27 +36,15 @@ namespace HomematicApp.Repositories
 
         public async Task<bool> Register(User user)
         {
-            
+            var existentDbuser = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email || u.CNP==user.CNP || u.Device_Id==user.Device_Id);
+            if(existentDbuser != null)
+            {
+                return false;
+            }
+            user.Password = _hashService.HashPassword(user.Password);
             user.Is_Admin = false;
-            /*
-            MySql.Data.MySqlClient.MySqlConnection conn;
-            string conString = "server=127.0.0.1;database=homematic;uid=root;pwd=";
-            conn = new MySql.Data.MySqlClient.MySqlConnection();
-            conn.ConnectionString = conString;
-            conn.Open();
-
-            MySqlCommand cmd = null;
-            string cmdString = "";
-            cmdString = "insert into users (device_id, password ,email ,first_name , last_name,is_admin, CNP) values('" + user.DeviceId + "','" + user.Password + "','" + user.Email + "','" + user.FirstName + "','" + user.LastName + "'," + user.IsAdmin + ",'" + user.CNP + "')";
-
-            cmd = new MySqlCommand(cmdString, conn);
-            int rowsAffected = cmd.ExecuteNonQuery();
-
-            conn.Close();
-
-            return rowsAffected == 1;*/
             _context.Users.Add(user);
-
+            
             return await _context.SaveChangesAsync() == 1;
 
         }
