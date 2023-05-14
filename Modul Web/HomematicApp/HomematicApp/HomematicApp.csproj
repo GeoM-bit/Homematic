@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Authentication\Admin\" />
+    <Folder Include="Views\User\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 

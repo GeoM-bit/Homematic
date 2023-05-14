@@ -3,7 +3,7 @@ using HomematicApp.Context.DbModels;
 using HomematicApp.Domain.Abstractions;
 using HomematicApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Web;
 
 namespace HomematicApp.Controllers
 {
@@ -74,16 +74,55 @@ namespace HomematicApp.Controllers
             return View();
         }
 
-        public IActionResult ResetPassword()
+        [Route("ResetPassword/{userEmail}/{userToken}", Name = "ResetPassword/{userEmail}/{userToken}")]
+        public async Task<IActionResult> ResetPassword(string? userEmail, string? userToken, ResetPasswordModel resetPasswordModel)
         {
+            if (userEmail != null && userToken != null && resetPasswordModel.NewPassword==null)
+            {
+                string? cookieToken = null;
+
+                if (HttpContext.Request.Cookies.TryGetValue("resetPasswordToken", out cookieToken))
+                {
+                    bool result = await authenticationRepository.ConfirmResetPasswordRequest(userEmail, userToken, cookieToken);
+                    return View();
+                }
+
+                ViewBag.TokenExpired = true;
+                return View();
+            }
+            else if(resetPasswordModel.NewPassword != null)
+            {
+                bool result = await authenticationRepository.ResetPassword(userEmail, resetPasswordModel.NewPassword);
+                if (result)
+                {
+                    ViewBag.ResetSuccess = true;
+                }
+                else
+                {
+                    ViewBag.ResetSuccess = false;
+                }
+                return View();
+            }
             return View();
         }
 
-        public async Task<IActionResult> ForgotPassword(ResetPasswordEmail resetPasswordEmail)
+        public async Task<IActionResult> ForgotPassword(ResetPasswordModel resetPasswordmodel)
         {
-            if (resetPasswordEmail.Email != null)
+            if (resetPasswordmodel.Email != null)
             {
-                bool result = await authenticationRepository.ForgotPassword(resetPasswordEmail.Email);
+                string token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+                HttpContext.Response.Cookies.Append("resetPasswordToken", token, new CookieOptions { Expires = DateTime.Now.AddMinutes(10) });
+                var resetPasswordLink = Url.Action("ResetPassword", "Authentication", new { userEmail = HttpUtility.UrlEncode(resetPasswordmodel.Email), userToken = HttpUtility.UrlEncode(token)}, protocol: Request.Scheme);
+                bool result = await authenticationRepository.ForgotPassword(resetPasswordmodel.Email, resetPasswordLink);
+                if (result)
+                {
+                    ViewBag.RequestSuccess = true;
+                }
+                else
+                {
+                    ViewBag.RequestSuccess = false;
+                }
+                return View();
             }
             return View();
         }

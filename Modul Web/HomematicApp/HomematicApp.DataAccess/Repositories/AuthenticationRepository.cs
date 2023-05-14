@@ -1,9 +1,12 @@
 ﻿using HomematicApp.Context.Context;
 using HomematicApp.Context.DbModels;
 using HomematicApp.Domain.Abstractions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-
+using System.Security.Policy;
+using System.Web;
 
 namespace HomematicApp.Repositories
 {
@@ -21,7 +24,23 @@ namespace HomematicApp.Repositories
             _templateFillerService = templateFillerService;
         }
 
-        public async Task<bool> ForgotPassword(string email)
+        public async Task<bool> ConfirmResetPasswordRequest(string email, string token, string cookieToken)
+        {
+            email = HttpUtility.UrlDecode(email);
+            token = HttpUtility.UrlDecode(token);
+           
+            var userFromDb = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            if (userFromDb != null && token != null && cookieToken!=null)
+            {
+                if (token == cookieToken)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public async Task<bool> ForgotPassword(string email, string link)
         {
             var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
 
@@ -41,9 +60,8 @@ namespace HomematicApp.Repositories
                 {
                     FirstName = dbUser.First_Name,
                     LastName = dbUser.Last_Name,
-                    Link = "aha"
-                };
-
+                    Link = link
+            };
                 var body = await _templateFillerService.FillTemplate(pathToFile, model);
                 await _emailSender.SendEmailAsync(email, "Reset Password", body);
                 return true;
@@ -58,7 +76,9 @@ namespace HomematicApp.Repositories
             if (dbUser != null)
             {
                 if (_hashService.VerifyPassword(loginUser.Password, dbUser.Password))
+                {
                     return true;
+                }
                 return false;
             }
 
@@ -85,9 +105,20 @@ namespace HomematicApp.Repositories
 
         }
 
-        public Task<bool> ResetPassword(string deviceId, string newPassword)
+        public async Task<bool> ResetPassword(string email, string newPassword)
         {
-            throw new NotImplementedException();
+            email = HttpUtility.UrlDecode(email);
+            var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (dbUser != null)
+            {
+                dbUser.Password = _hashService.HashPassword(newPassword);
+                _context.Users.Update(dbUser);
+
+                return await _context.SaveChangesAsync() == 1;
+            }
+
+            return false;
         }
     }
 }
