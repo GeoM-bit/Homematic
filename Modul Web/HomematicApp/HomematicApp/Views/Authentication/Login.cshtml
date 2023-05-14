@@ -1,0 +1,50 @@
+﻿@model HomematicApp.ViewModels.LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+    ViewData["email-placeholder"] = "Email";
+    ViewData["password-placeholder"] = "Password";
+    ViewData["login-button"] = "Login";
+    ViewData["success-message"] = "Your account was successfully created!";
+    ViewData["failure-message"] = "Invalid credentials!";
+
+}
+
+<h1>Login</h1>
+
+<form class="user" method="post" asp-action="LoginUser">
+    <div class="form-group row">
+        @if (ViewBag.RegisterSuccess==true)
+        {
+            <div class="alert alert-success" role="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none'">×</span>
+                @ViewData["success-message"]
+            </div>
+        }
+        @if (ViewBag.LoginFailed == true)
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none'">×</span>
+                @ViewData["failure-message"]
+            </div>
+        }
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <input type="email" class="form-control form-control-user" asp-for="Email"
+                   placeholder=@ViewData["email-placeholder"]>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="spacing"></div>
+        <div class="col-sm-6">
+            <input type="password" class="form-control form-control-user" asp-for="Password"
+                   placeholder=@ViewData["password-placeholder"]>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div style="margin-left:35%"><a asp-controller="Authentication" asp-action="ForgotPassword">Forgot your password?</a>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-user btn-block">
+        @ViewData["login-button"]
+    </button>
+</form>

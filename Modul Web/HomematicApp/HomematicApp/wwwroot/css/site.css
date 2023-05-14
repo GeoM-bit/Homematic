@@ -16,3 +16,17 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.closebtn {
+    margin-left: 15px;
+    color: black;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+}
+
+.spacing{
+    margin-bottom:15px;
+}

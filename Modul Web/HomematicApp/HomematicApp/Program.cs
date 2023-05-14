@@ -1,8 +1,28 @@
+using HomematicApp.Context.Context;
+using HomematicApp.Domain.Abstractions;
+using HomematicApp.Repositories;
+using HomematicApp.Service.Services;
+using HomematicApp.Service.Services.EmailService;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
 
+// Add services to the container.
+builder.Services.AddControllersWithViews(); 
+builder.Services.AddMvc();
+builder.Services.AddControllers();
+builder.Services.AddOptions();
+builder.Services.AddDbContext<HomematicContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("HomematicConnectionString"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("HomematicConnectionString"))));
+
+builder.Services.Configure<SenderOptions>(options => builder.Configuration.GetSection("SenderOptions").Bind(options));
+builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
+builder.Services.AddScoped<IHashService, HashService>();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddScoped<ITemplateFillerService, TemplateFillerService>();
+builder.Services.AddAutoMapper(typeof(Program));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,6 +42,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Authentication}/{action=Register}/{id?}");
 
 app.Run();
