@@ -1,6 +1,6 @@
 using HomematicApp.Context.Context;
+using HomematicApp.DataAccess.Repositories;
 using HomematicApp.Domain.Abstractions;
-using HomematicApp.Repositories;
 using HomematicApp.Service.Services;
 using HomematicApp.Service.Services.EmailService;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -19,6 +19,7 @@ builder.Services.AddDbContext<HomematicContext>(options =>
 
 builder.Services.Configure<SenderOptions>(options => builder.Configuration.GetSection("SenderOptions").Bind(options));
 builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<IHashService, HashService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddScoped<ITemplateFillerService, TemplateFillerService>();

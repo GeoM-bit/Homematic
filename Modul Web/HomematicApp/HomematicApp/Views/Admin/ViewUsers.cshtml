@@ -1,0 +1,52 @@
+﻿@model HomematicApp.ViewModels.ViewUsersModel
+
+@{
+    ViewData["Title"] = "View Users";
+	ViewData["device-id"] = "Device Id";
+	ViewData["email"] = "Email";
+	ViewData["first-name"] = "First Name";
+	ViewData["last-name"] = "Last Name";
+	ViewData["cnp"] = "CNP";
+	ViewData["action"] = "Delete User";
+}
+
+<h1>View Users</h1>
+
+<div class="card shadow mb-4">
+	<div class="card-body">
+		<div class="table-responsive">
+			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+				<thead>
+					<tr>
+
+						<th class="text-center">@ViewData["device-id"]</th>
+						<th class="text-center">@ViewData["email"]</th>
+						<th class="text-center">@ViewData["first-name"]</th>
+						<th class="text-center">@ViewData["last-name"]</th>
+						<th class="text-center">@ViewData["cnp"]</th>
+						<th class="text-center" data-orderable="false">@ViewData["action"]</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model.ViewUsers)
+					{
+						<tr>
+							<td>@item.Device_Id</td>
+							<td>@item.Email</td>
+							<td>@item.First_Name</td>
+							<td>@item.Last_Name</td>
+							<td>@item.CNP</td>
+								<th>
+									<div class="btn-group-vertical">
+									<form method="post" asp-action="DeleteUser" asp-route-Id="@item.Email">
+											<button type="submit" class="btn btn-outline-danger mb-2" >Delete</button>
+										</form>
+									</div>
+								</th>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

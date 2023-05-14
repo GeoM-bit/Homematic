@@ -9,8 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Authentication\Admin\" />
-    <Folder Include="Views\User\" />
+    <Compile Remove="Views\Authentication\Admin\**" />
+    <Compile Remove="Views\User\**" />
+    <Content Remove="Views\Authentication\Admin\**" />
+    <Content Remove="Views\User\**" />
+    <EmbeddedResource Remove="Views\Authentication\Admin\**" />
+    <EmbeddedResource Remove="Views\User\**" />
+    <None Remove="Views\Authentication\Admin\**" />
+    <None Remove="Views\User\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
