@@ -1,6 +1,7 @@
 ﻿using HomematicApp.Context.Context;
 using HomematicApp.Context.DbModels;
 using HomematicApp.Domain.Abstractions;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -10,11 +11,46 @@ namespace HomematicApp.Repositories
     {
         private readonly HomematicContext _context;
         private readonly IHashService _hashService;
-        public AuthenticationRepository(HomematicContext context, IHashService hashService)
+        private readonly IEmailSender _emailSender;
+        private readonly ITemplateFillerService _templateFillerService;
+        public AuthenticationRepository(HomematicContext context, IHashService hashService, IEmailSender emailSender, ITemplateFillerService templateFillerService)
         {
             _context = context;
             _hashService = hashService;
+            _emailSender = emailSender;
+            _templateFillerService = templateFillerService;
         }
+
+        public async Task<bool> ForgotPassword(string email)
+        {
+            var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (dbUser != null)
+            {
+                var pathToFile = Path.GetDirectoryName(Directory.GetCurrentDirectory())
+            + Path.DirectorySeparatorChar.ToString()
+            + "HomematicApp.Service"
+            + Path.DirectorySeparatorChar.ToString()
+            + "Services"
+            + Path.DirectorySeparatorChar.ToString()
+            + "EmailService"
+            + Path.DirectorySeparatorChar.ToString()
+            + "ResetPasswordTemplate.cshtml";
+
+                object model = new
+                {
+                    FirstName = dbUser.First_Name,
+                    LastName = dbUser.Last_Name,
+                    Link = "aha"
+                };
+
+                var body = await _templateFillerService.FillTemplate(pathToFile, model);
+                await _emailSender.SendEmailAsync(email, "Reset Password", body);
+                return true;
+            }
+            return false;
+        }
+
         public async Task<bool> Login(LoginUser loginUser)
         {
             var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginUser.Email);

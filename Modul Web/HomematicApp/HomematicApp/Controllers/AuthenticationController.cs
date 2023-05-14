@@ -21,11 +21,11 @@ namespace HomematicApp.Controllers
         public IActionResult Register()
         {
             var RegisterFailed = Request.Query["RegisterFailed"].ToString();
-            if (!String.IsNullOrEmpty(RegisterFailed))
+            if (!string.IsNullOrEmpty(RegisterFailed))
             {
                 ViewBag.RegisterFailed = bool.Parse(RegisterFailed);
             }
-            return (IActionResult)View();
+            return View();
         }
 
         public async Task<IActionResult> RegisterUser(UserModel userModel)
@@ -45,15 +45,15 @@ namespace HomematicApp.Controllers
         public IActionResult Login()
         {
             var RegisterSuccess = Request.Query["RegisterSuccess"].ToString();
-            if(!String.IsNullOrEmpty(RegisterSuccess)) {
+            if(!string.IsNullOrEmpty(RegisterSuccess)) {
                 ViewBag.RegisterSuccess = bool.Parse(RegisterSuccess);
             }
             var LoginFailed = Request.Query["LoginFailed"].ToString();
-            if (!String.IsNullOrEmpty(LoginFailed))
+            if (!string.IsNullOrEmpty(LoginFailed))
             {
                 ViewBag.LoginFailed = bool.Parse(LoginFailed);
             }
-            return (IActionResult)View();
+            return View();
         }
         public async Task<IActionResult> LoginUser(LoginModel loginModel)
         {
@@ -71,12 +71,22 @@ namespace HomematicApp.Controllers
         }
         public IActionResult Logout()
         {
-            return (IActionResult)View();
+            return View();
         }
 
         public IActionResult ResetPassword()
         {
-            return (IActionResult)View();
+            return View();
         }
+
+        public async Task<IActionResult> ForgotPassword(ResetPasswordEmail resetPasswordEmail)
+        {
+            if (resetPasswordEmail.Email != null)
+            {
+                bool result = await authenticationRepository.ForgotPassword(resetPasswordEmail.Email);
+            }
+            return View();
+        }
+
     }
 }

@@ -26,3 +26,7 @@ body {
     line-height: 20px;
     cursor: pointer;
 }
+
+.spacing{
+    margin-bottom:15px;
+}

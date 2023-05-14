@@ -5,8 +5,8 @@
     ViewData["email-placeholder"] = "Email";
     ViewData["password-placeholder"] = "Password";
     ViewData["login-button"] = "Login";
-    ViewData["success-message"] = "Contul a fost creat cu succes!";
-    ViewData["failure-message"] = "Credentiale invalide!";
+    ViewData["success-message"] = "Your account was successfully created!";
+    ViewData["failure-message"] = "Invalid credentials!";
 
 }
 
@@ -35,10 +35,13 @@
                    placeholder=@ViewData["email-placeholder"]>
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
+        <div class="spacing"></div>
         <div class="col-sm-6">
             <input type="password" class="form-control form-control-user" asp-for="Password"
                    placeholder=@ViewData["password-placeholder"]>
             <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div style="margin-left:35%"><a asp-controller="Authentication" asp-action="ForgotPassword">Forgot your password?</a>
         </div>
     </div>
     <button type="submit" class="btn btn-primary btn-user btn-block">
