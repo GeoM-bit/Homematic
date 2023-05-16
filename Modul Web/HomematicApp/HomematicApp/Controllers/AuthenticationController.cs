@@ -2,7 +2,9 @@
 using HomematicApp.Context.DbModels;
 using HomematicApp.Domain.Abstractions;
 using HomematicApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System.Web;
 
 namespace HomematicApp.Controllers
@@ -58,10 +60,11 @@ namespace HomematicApp.Controllers
         public async Task<IActionResult> LoginUser(LoginModel loginModel)
         {
             LoginUser loginUser = mapper.Map<LoginUser>(loginModel);
-            bool result = await authenticationRepository.Login(loginUser);
+            string? result = await authenticationRepository.Login(loginUser);
 
-            if (result)
+            if (result!=null)
             {
+                HttpContext.Session.SetString("Token", result);
                 return RedirectToAction("Login");  //redirect to user/admin homepage when done
             }
             else
@@ -69,9 +72,12 @@ namespace HomematicApp.Controllers
                 return RedirectToAction("Login", new {LoginFailed = true});
             }
         }
+
+        [Authorize(Roles="USER")]
         public IActionResult Logout()
         {
-            return View();
+            HttpContext.Session.Remove("Token");
+            return RedirectToAction("Login");
         }
 
         [Route("ResetPassword/{userEmail}/{userToken}", Name = "ResetPassword/{userEmail}/{userToken}")]
