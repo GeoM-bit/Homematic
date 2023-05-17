@@ -1,0 +1,36 @@
+﻿@model HomematicApp.ViewModels.ActionListModel
+
+@{
+    ViewData["Title"] = "View Actions";
+	ViewData["action-type"] = "Action Type";
+	ViewData["value"] = "Value";
+	ViewData["date-time"] = "Date";
+}
+
+<h1>View Actions</h1>
+
+<div class="card shadow mb-4">
+	<div class="card-body">
+		<div class="table-responsive">
+			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+				<thead>
+					<tr>
+						<th class="text-center">@ViewData["action-type"]</th>
+						<th class="text-center">@ViewData["value"]</th>
+						<th class="text-center">@ViewData["date-time"]</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model.Actions)
+					{
+						<tr>
+							<td class="text-center">@item.Action_Type</td>
+							<td class ="text-center">@item.Value_Action</td>
+							<td class="text-center">@item.Date_Time</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

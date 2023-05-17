@@ -1,5 +1,6 @@
 ﻿using HomematicApp.Context.DbModels;
 using Microsoft.EntityFrameworkCore;
+using Action = HomematicApp.Context.DbModels.Action;
 
 namespace HomematicApp.Context.Context
 {
@@ -10,6 +11,6 @@ namespace HomematicApp.Context.Context
         { }
 
         public DbSet<User> Users { get; set; }
-
+        public DbSet<Action> Actions { get; set; }
     }
 }
