@@ -3,9 +3,7 @@ using HomematicApp.Domain.Abstractions;
 using HomematicApp.Repositories;
 using HomematicApp.Service.Services;
 using HomematicApp.Service.Services.EmailService;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -29,15 +27,6 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddScoped<ITemplateFillerService, TemplateFillerService>();
 builder.Services.AddAutoMapper(typeof(Program));
-
-//builder.Services.ConfigureApplicationCookie(options =>
-//{
-//    options.Cookie.Name = "IdentityCookie";
-//    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-//    options.LoginPath = "/Authentication/Login";
-//    options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
-//    options.SlidingExpiration = true;
-//});
 
 builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache();
@@ -69,11 +58,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Authentication/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
+app.UseStatusCodePagesWithReExecute("/Authentication/Error", "?statusCode={0}");
 app.UseHttpsRedirection();
 app.UseSession();
 app.Use(async (context, next) =>
@@ -81,7 +71,8 @@ app.Use(async (context, next) =>
     var token = context.Session.GetString("Token");
     if (!string.IsNullOrEmpty(token))
     {
-        context.Request.Headers.Add("Authorization", "Bearer " + token);
+        if (!context.Request.Headers.ContainsKey("Authorization"))
+            context.Request.Headers.Add("Authorization", "Bearer " + token);
     }
     await next();
 });
