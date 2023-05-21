@@ -1,0 +1,34 @@
+﻿@model HomematicApp.ViewModels.ParameterModel
+
+@{
+	ViewData["Title"] = "View Parameters";
+	ViewData["temperature"] = "Temperature";
+	ViewData["light-intensity"] = "Light Intensity";
+	ViewData["opened-door"] = "Opened Door";
+}
+
+<h1>View Actions</h1>
+
+<div class="card shadow mb-4">
+	<div class="card-body">
+		<div class="table-responsive">
+			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+				<thead>
+					<tr>
+						<th class="text-center">@ViewData["temperature"]</th>
+						<th class="text-center">@ViewData["light-intensity"]</th>
+						<th class="text-center">@ViewData["opened-door"]</th>
+					</tr>
+				</thead>
+				<tbody>
+						<tr>
+							<td class="text-center">@Model.Temperature</td>
+							<td class="text-center">@Model.Light_Intensity</td>
+							<td class="text-center">@Model.Opened_Door</td>
+						</tr>
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

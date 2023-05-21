@@ -12,5 +12,6 @@ namespace HomematicApp.Context.Context
 
         public DbSet<User> Users { get; set; }
         public DbSet<Action> Actions { get; set; }
+        public DbSet<Parameter> Parameters { get; set; }
     }
 }

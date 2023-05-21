@@ -3,7 +3,7 @@ using HomematicApp.Domain.Abstractions;
 using HomematicApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Action = HomematicApp.Context.DbModels.Action;
+using System.Security.Claims;
 
 namespace HomematicApp.Controllers
 {
@@ -19,10 +19,19 @@ namespace HomematicApp.Controllers
         }
         public async Task<IActionResult> ViewActions()
         {
-            var list = await userRepository.getActions();
+            var email = HttpContext.User.Identity.Name;
+            var list = await userRepository.getActions(email);
             var actions = mapper.Map<List<ActionModel>>(list);
 
             return View(new ActionListModel { Actions = actions});
+        }
+
+        public async Task<IActionResult> ViewParameters()
+        {
+            var result = await userRepository.getParameters();
+            ParameterModel model = mapper.Map<ParameterModel>(result);
+
+            return View(model);
         }
     }
 }

@@ -13,7 +13,8 @@ namespace HomematicApp.Service.Services
         public string BuildToken(string key, string issuer, string email, string role)
         {
             var claims = new[] {
-            new Claim("name", email),
+            new Claim(ClaimTypes.Email, email),
+            new Claim(ClaimTypes.Name, email),
             new Claim("role", role),
             new Claim("name-identifier",
             Guid.NewGuid().ToString())
@@ -50,5 +51,7 @@ namespace HomematicApp.Service.Services
             }
             return true;
         }
+
+
     }
 }
