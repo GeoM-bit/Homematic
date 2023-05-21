@@ -9,18 +9,26 @@
     ViewData["cnp-placeholder"] = "Enter CNP";
     ViewData["device-placeholder"] = "Enter IMEI code";
     ViewData["register-button"] = "Register";
-    ViewData["rejection-message"] = "Your account could not be created!";
+    ViewData["rejection-message"] = "The account could not be created!";
+    ViewData["success-message"] = "The account was successfully created!";
 }
 
-<h2>Register your account</h2>
+<h2>Register users</h2>
 
 <form class="user" method="post" asp-action="RegisterUser">
     <div class="form-group row">
-        @if (@ViewBag.RegisterFailed == true)
+        @if (@ViewBag.RegisterSuccess == false)
         {
             <div class="alert alert-danger" role="alert">
                 <span class="closebtn" onclick="this.parentElement.style.display='none'">×</span>
                 @ViewData["rejection-message"]
+            </div>
+        }
+        else if (ViewBag.RegisterSuccess == true)
+        {
+            <div class="alert alert-success" role="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none'">×</span>
+                @ViewData["success-message"]
             </div>
         }
     </div>

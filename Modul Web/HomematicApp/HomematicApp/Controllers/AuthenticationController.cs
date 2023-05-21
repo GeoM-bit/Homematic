@@ -23,34 +23,35 @@ namespace HomematicApp.Controllers
 
         public IActionResult Register()
         {
-            var RegisterFailed = Request.Query["RegisterFailed"].ToString();
-            if (!string.IsNullOrEmpty(RegisterFailed))
+            var RegisterSuccess = Request.Query["RegisterSuccess"].ToString();
+            if (!string.IsNullOrEmpty(RegisterSuccess))
             {
-                ViewBag.RegisterFailed = bool.Parse(RegisterFailed);
+                ViewBag.RegisterSuccess = bool.Parse(RegisterSuccess);
+            }
+            if (!string.IsNullOrEmpty(RegisterSuccess))
+            {
+                ViewBag.RegisterFailed = bool.Parse(RegisterSuccess);
             }
             return View();
         }
 
+        [Authorize(Roles="ADMIN")]
         public async Task<IActionResult> RegisterUser(UserModel userModel)
         {
             User user = mapper.Map<User>(userModel);
             bool result = await authenticationRepository.Register(user);
             if (result)
             {
-                return RedirectToAction("Login", new {RegisterSuccess=true});
+                return RedirectToAction("Register", new {RegisterSuccess=true});
             }
             else
             {
-                return RedirectToAction("Register", new { RegisterFailed = true });
+                return RedirectToAction("Register", new { RegisterSuccess = false });
             }
         }
 
         public IActionResult Login()
-        {
-            var RegisterSuccess = Request.Query["RegisterSuccess"].ToString();
-            if(!string.IsNullOrEmpty(RegisterSuccess)) {
-                ViewBag.RegisterSuccess = bool.Parse(RegisterSuccess);
-            }
+        {           
             var LoginFailed = Request.Query["LoginFailed"].ToString();
             if (!string.IsNullOrEmpty(LoginFailed))
             {
@@ -64,7 +65,7 @@ namespace HomematicApp.Controllers
                 }
                 else if (User.IsInRole(Roles.ADMIN.ToString()))
                 {
-                    return RedirectToAction("Login");
+                    return RedirectToAction("ViewActions", "User");
                 }
                 else
                 {

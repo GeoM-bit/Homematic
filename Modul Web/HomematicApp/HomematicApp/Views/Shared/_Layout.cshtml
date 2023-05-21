@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Authentication" asp-action="Register"><img height="40px" width="65px" src="~/img/logo.png" />   HomematicApp</a>
+                <a class="navbar-brand"><img height="40px" width="65px" src="~/img/logo.png" />   HomematicApp</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,9 +21,6 @@
                     <ul class="navbar-nav flex-grow-1"> 
                         @if (!User.Identity.IsAuthenticated)
                         {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Register">Register</a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Login">Login</a>
                         </li>
@@ -41,12 +38,12 @@
                                             @if (User.IsInRole("USER"))
                                             {
                                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewActions">View Actions</a>
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewParameters">View Parameters</a>
                                             }
                                             else if (User.IsInRole("ADMIN"))
                                             {
-                                               
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Register">Register Users</a>
                                             }
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewParameters">View Parameters</a>
                                             <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Logout">Logout</a>
                                 </div>
                             </div>                         

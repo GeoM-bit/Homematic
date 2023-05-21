@@ -104,11 +104,6 @@ namespace HomematicApp.Repositories
             return null;
         }
 
-        public Task<bool> Logout()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<bool> Register(User user)
         {
             var existentDbuser = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email || u.CNP==user.CNP || u.Device_Id==user.Device_Id);

@@ -5,22 +5,13 @@
     ViewData["email-placeholder"] = "Email";
     ViewData["password-placeholder"] = "Password";
     ViewData["login-button"] = "Login";
-    ViewData["success-message"] = "Your account was successfully created!";
     ViewData["failure-message"] = "Invalid credentials!";
-
 }
 
 <h1>Login</h1>
 
 <form class="user" method="post" asp-action="LoginUser">
     <div class="form-group row">
-        @if (ViewBag.RegisterSuccess==true)
-        {
-            <div class="alert alert-success" role="alert">
-                <span class="closebtn" onclick="this.parentElement.style.display='none'">×</span>
-                @ViewData["success-message"]
-            </div>
-        }
         @if (ViewBag.LoginFailed == true)
         {
             <div class="alert alert-danger" role="alert">
