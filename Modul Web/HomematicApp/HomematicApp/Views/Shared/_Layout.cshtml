@@ -32,12 +32,13 @@
                         <li>                          
                             <div class="my-dropdown">                                     
                                 <button class="my-dropbtn">
-                                    <a class="nav-link text-dark"> <img height="20px" width="20px" src="~/img/user.png" />  Hello,@User.Identity.Name!</a>
+                                    <a class="nav-link text-dark"> <img height="20px" width="20px" src="~/img/user.png" />  Hello, @User.Identity.Name!</a>
                                 </button>
                                 <div class="my-dropdown-content">
                                             @if (User.IsInRole("USER"))
                                             {
                                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewActions">View Actions</a>
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewPresets">View Presets</a>
                                             }
                                             else if (User.IsInRole("ADMIN"))
                                             {

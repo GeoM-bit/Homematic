@@ -1,6 +1,8 @@
 ﻿using HomematicApp.Context.Context;
 using HomematicApp.Context.DbModels;
 using HomematicApp.Domain.Abstractions;
+using HomematicApp.Domain.Common;
+using HomematicApp.Domain.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Action = HomematicApp.Context.DbModels.Action;
 
@@ -32,5 +34,67 @@ namespace HomematicApp.DataAccess.Repositories
             return result[0];
 		}
 
+		public async Task<List<PresetModelDTO>> getPresetList(string email)
+		{
+            var dbUser = await _context.Users.FirstOrDefaultAsync(u=>u.Email == email);
+            if (dbUser == null) return null;
+            var dbList = await _context.Presets.Where(p => p.Device_Id == null || p.Device_Id==dbUser.Device_Id).ToListAsync();
+            List<PresetModelDTO> decodedList = new List<PresetModelDTO>();
+            if(dbList!=null)
+            {
+                foreach(var preset in dbList)
+                {
+                    var decodedPreset = decodePreset(preset);
+                    decodedList.Add(decodedPreset);
+                }
+            }		
+            return decodedList;
+		}
+
+        public PresetModelDTO decodePreset(Preset preset)
+        {
+            var result = new PresetModelDTO();
+
+            result.Preset_Id = preset.Preset_Id;
+            result.Preset_Name = preset.Preset_Name;
+            result.Device_Id = preset.Device_Id;
+            result.Start_Date = preset.Start_Date;
+            result.End_Date = preset.End_Date;
+            result.Temperature_Options = new List<Options>();
+            result.Light_Options = new List<Options>();
+
+            string[] splits = preset.Option_Code.Split('.');
+
+            for(int i = 1; i<= int.Parse(splits[0]); i++)
+            {
+                TimeOnly time = new TimeOnly(int.Parse(splits[i].Substring(0,2)), int.Parse(splits[i].Substring(2,2)));
+                string tempValue = splits[i].Substring(4, 2);
+                string lightValue = splits[i].Substring(6, 3);
+                if (tempValue != "XX") {
+                    if(tempValue.StartsWith("0"))
+                    {
+                        tempValue = tempValue.Substring(1,1);
+						
+					}
+					Options tempOptions = new Options(time, tempValue);
+					result.Temperature_Options.Add(tempOptions);
+				}
+                if (lightValue != "XXX")
+                {
+					if (lightValue.StartsWith("0"))
+					{
+						lightValue = lightValue.Substring(1, 2);
+                        if (lightValue.StartsWith("0"))
+                        {
+                            lightValue = lightValue.Substring(1, 1);
+						}
+					}
+					Options lightOptions = new Options(time, lightValue);
+                    result.Light_Options.Add(lightOptions);
+                }
+			}
+
+            return result;
+        }
 	}
 }

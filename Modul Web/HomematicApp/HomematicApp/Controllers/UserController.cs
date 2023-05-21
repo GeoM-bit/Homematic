@@ -3,7 +3,6 @@ using HomematicApp.Domain.Abstractions;
 using HomematicApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace HomematicApp.Controllers
 {
@@ -32,6 +31,20 @@ namespace HomematicApp.Controllers
             ParameterModel model = mapper.Map<ParameterModel>(result);
 
             return View(model);
+        }
+
+        public async Task<IActionResult> CreateEvent()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> ViewPresets()
+        {
+			var email = HttpContext.User.Identity.Name;
+            var decodedList = await userRepository.getPresetList(email);
+            var list = mapper.Map<List<PresetModel>>(decodedList);
+
+			return View(new PresetListModel { Presets = list});
         }
     }
 }

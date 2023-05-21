@@ -1,0 +1,57 @@
+﻿@model HomematicApp.ViewModels.PresetListModel
+
+@{
+	ViewData["Title"] = "View Presets";
+	ViewData["preset-name"] = "Preset Name";
+	ViewData["start-date"] = "Start Date";
+	ViewData["end-date"] = "End Date";
+	ViewData["light-options"] = "Light Options";
+	ViewData["temperature-options"] = "Temperature Options";
+}
+
+<h1>View Presets</h1>
+
+<div class="card shadow mb-4">
+	<div class="card-body">
+		<div class="table-responsive">		
+			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+				<thead>
+					<tr>
+						<th class="text-center">@ViewData["preset-name"]</th>
+						<th class="text-center">@ViewData["start-date"]</th>
+						<th class="text-center">@ViewData["end-date"]</th>
+						<th class="text-center">@ViewData["light-options"]</th>
+						<th class="text-center">@ViewData["temperature-options"]</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model.Presets)
+					{
+						<tr>
+							<td class="text-center">@item.Preset_Name</td>
+							<td class="text-center">@item.Start_Date</td>
+							<td class="text-center">@item.End_Date</td>
+							<td class="text-center">
+								@foreach (var option in item.Light_Options)
+								{
+									<p>
+										Time: @option.Time	Value: @option.Value%									
+									</p>
+								}
+							</td>
+							<td class="text-center">
+								@foreach (var option in item.Temperature_Options)
+								{
+									<p>Time: @option.Time	Value: @option.Value°C</p>
+								}
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>	
+</div>
+<div style="text-align:end">
+	<a asp-controller="User" asp-action="CreateEvent">Create event</a>
+</div>

@@ -1,4 +1,5 @@
 ﻿using HomematicApp.Context.DbModels;
+using HomematicApp.Domain.DTOs;
 using Action = HomematicApp.Context.DbModels.Action;
 
 namespace HomematicApp.Domain.Abstractions
@@ -8,5 +9,7 @@ namespace HomematicApp.Domain.Abstractions
         Task<List<Action>> getActions(string email);
         Task<Parameter> getParameters();
         void modifyParameters(Parameter parameter);
+        Task<List<PresetModelDTO>> getPresetList(string email);
+        PresetModelDTO decodePreset(Preset preset);
     }
 }

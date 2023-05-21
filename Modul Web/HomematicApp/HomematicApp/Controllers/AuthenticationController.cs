@@ -5,7 +5,6 @@ using HomematicApp.Domain.Common;
 using HomematicApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MySqlX.XDevAPI.Common;
 using System.Web;
 
 namespace HomematicApp.Controllers
@@ -21,6 +20,7 @@ namespace HomematicApp.Controllers
             mapper = _mapper;
         }
 
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Register()
         {
             var RegisterSuccess = Request.Query["RegisterSuccess"].ToString();

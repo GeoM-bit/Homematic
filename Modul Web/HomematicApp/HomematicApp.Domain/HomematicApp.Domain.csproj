@@ -10,8 +10,4 @@
     <ProjectReference Include="..\HomematicApp.Context\HomematicApp.Context.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTOs\" />
-  </ItemGroup>
-
 </Project>

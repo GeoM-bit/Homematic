@@ -2,14 +2,9 @@
 using HomematicApp.Context.DbModels;
 using HomematicApp.Domain.Abstractions;
 using HomematicApp.Domain.Common;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.VisualBasic;
-using System.Data;
-using System.Security.Policy;
 using System.Web;
 
 namespace HomematicApp.Repositories

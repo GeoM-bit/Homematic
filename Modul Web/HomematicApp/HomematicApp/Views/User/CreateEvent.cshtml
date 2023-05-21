@@ -1,0 +1,120 @@
+﻿@model HomematicApp.ViewModels.PresetModel
+
+@{
+    ViewData["Title"] = "Create Event";
+    ViewData["create-event-button"] = "Create Event";
+    ViewData["preset-name"] = "Event Name";
+    ViewData["start-date"] = "Start Date";
+    ViewData["end-date"] = "End Date";
+    ViewData["time"] = "Time";
+    ViewData["value"] = "Value";
+    ViewData["failure-message"] = "The event could not be created!";
+}
+
+<h1>
+    @ViewData["Title"]
+</h1>
+
+<div class="card shadow">
+<div class="card-body">
+<form class="user" method="post" asp-action="CreateEvent">
+    <div class="form-group row">
+        @if (ViewBag.CreateEventSuccess == false)
+        {
+            <div class="alert alert-danger" role="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none'">×</span>
+                @ViewData["failure-message"]
+            </div>
+        }
+    </div>
+    <div class="form-group row spacing">
+                <div class="col-sm-6">
+            <label asp-for="Preset_Name">@ViewData["preset-name"]<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" asp-for="Preset_Name"
+                   placeholder=@ViewData["preset-name"]>         
+        </div>  
+        
+
+    </div>
+    <div class="form-group row spacing">
+        <div class="col-sm-6">
+            <label asp-for="Start_Date">@ViewData["start-date"]<span class="text-danger">*</span></label>
+            <input type="date" class="form-control" asp-for="Start_Date"
+                   placeholder=@ViewData["start-date"]>
+        </div>
+    </div>
+    <div class="form-group row spacing">
+        <div class="col-sm-6">
+            <label asp-for="End_Date">@ViewData["end-date"]<span class="text-danger">*</span></label>
+            <input type="date" class="form-control" asp-for="End_Date"
+                   placeholder=@ViewData["end-date"]>
+        </div>
+    </div>
+    <div class="card shadow mb-4 col-sm-6">
+    <div class="card-body">
+                    <div><strong>Light options</strong>
+                        @if (Model != null)
+                        {
+                            @foreach (var item in Model.Light_Options)
+                            {
+                                <p>Time: @item.Time	Value: @item.Value%</p>
+                            }
+                        }
+                    </div>
+
+    <div class="form-group row spacing">
+        <div class="col-sm-6">
+            <label asp-for="Light.Time">@ViewData["time"]</label>
+            <input type="time" class="form-control" asp-for="Light.Time"
+                   placeholder=@ViewData["time"]>
+        </div>
+        <div class="col-sm-6">
+            <label asp-for="Light.Value" >@ViewData["value"]</label>                           
+            <input type="range" id="lightRangeId" min="0" max="100" value ="0" class="custom-range" 
+                                   placeholder=@ViewData["value"] oninput="this.nextElementSibling.value = this.value">
+                            <input asp-for="Light.Value" class="form-control" readonly style="max-width:200px">
+        </div>
+
+    </div>
+     <div class="card-body">
+                    <div><strong>Temperature options</strong>
+                        @if (Model != null)
+                        {
+                            @foreach (var item in Model.Temperature_Options)
+                            {
+                                <p>Time: @item.Time	Value: @item.Value%</p>
+                            }
+                        }
+                    </div>
+
+    <div class="form-group row spacing">
+        <div class="col-sm-6">
+            <label asp-for="Temperature.Time">@ViewData["time"]</label>
+            <input type="time" class="form-control" asp-for="Temperature.Time"
+                   placeholder=@ViewData["time"]>
+        </div>
+        <div class="col-sm-6">
+            <label asp-for="Temperature.Value" >@ViewData["value"]</label>                           
+            <input type="range" id="lightRangeId" min="0" max="40" value ="0" class="custom-range" 
+                                   placeholder=@ViewData["value"] oninput="this.nextElementSibling.value = this.value">
+                            <input asp-for="Temperature.Value" class="form-control" readonly style="max-width:200px">
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-user btn-block">
+        @ViewData["create-event-button"]
+    </button>
+</form>
+</div>
+</div>
+@*
+<a href="~/lib/jquery/dist/jquery.min.map">~/lib/jquery/dist/jquery.min.map</a>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $('#lightRangeId').change(function(){
+        $('#lightId').text($('#lightRangeId').val())
+    })
+</script>*@
