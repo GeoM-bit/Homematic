@@ -10,5 +10,6 @@ namespace HomematicApp.Domain.Abstractions
     public interface IAdminRepository
     {
         Task<List<User>> GetUsers();
+        Task<bool> DeleteUser(string email);
     }
 }

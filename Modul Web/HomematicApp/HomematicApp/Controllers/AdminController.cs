@@ -24,10 +24,12 @@ namespace HomematicApp.Controllers
             return View(viewUsersModel);
         }
 
-        [Route("Admin/DeleteUser/{email}")]
-        public async Task<IActionResult> DeleteUser()
+       // [Route("Admin/DeleteUser/{email}")]
+        public async Task<IActionResult> DeleteUser([FromBody]object? email)
 		{
-            string email = (string)HttpContext.GetRouteData().Values["email"];
+            //string email = (string)HttpContext.GetRouteData().Values["email"];
+            var res = HttpContext.Request.Body.ToString();
+            //var result=await adminRepository.DeleteUser(email);
 			
 			return RedirectToAction("ViewUsers");
 		}

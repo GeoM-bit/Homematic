@@ -39,7 +39,7 @@
 								<th>
 									<div class="btn-group-vertical">
 									<form method="post" asp-action="DeleteUser" asp-route-Id="@item.Email">
-											<button type="submit" class="btn btn-outline-danger mb-2" >Delete</button>
+                                        <input type="button" value="Delete" class="btn btn-outline-danger mb-2" onclick="deleteConfirm('@item.Email')">
 										</form>
 									</div>
 								</th>
@@ -50,3 +50,61 @@
 		</div>
 	</div>
 </div>
+
+  <div class="modal fade" id="delete-conformation" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+<div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+    <div class="modal-content">
+        <div class="modal-header" style="background:#d9534f;color:white;">
+            <h4 class="modal-title" id="delete-conformation">
+                Delete Confirmation
+            </h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <span>
+                            Are you sure you want to delete 
+                        </span>
+                        <strong id="deletedValueName">
+                        </strong>
+                        <span>
+                            ?
+                            </span> 
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <input type="submit" class="btn btn-danger" value="Delete" onclick="deleteData()" />
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+         //this is only display bootstrap modal pop up dialog
+         var deleteConfirm = function (val) {
+             $('#deletedValueName').text(val);
+             $('#delete-conformation').modal('show');
+         }
+         //call this function after click on confirm delete button
+         var deleteData = function () {
+         $('#divLoading').show();
+         var id = $('#id').val();
+         $.ajax({
+             type: "POST",
+                url: '@Url.Action("DeleteUser","Admin")',
+             data:{id: id},
+             success: function (result) {
+                $("#delete-conformation").modal('hide');
+             },
+             error: function () {
+                 $("#delete-conformation").modal('hide');
+             }
+         });
+        }
+    </script>
+}

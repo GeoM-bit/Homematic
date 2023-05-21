@@ -18,5 +18,15 @@ namespace HomematicApp.DataAccess.Repositories
         {
             return await _context.Users.ToListAsync();
         }
+
+        public async Task<bool> DeleteUser(string email)
+        {
+
+        var user=  await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            _context.Users.Remove(user);
+            var result=await _context.SaveChangesAsync();
+            return result==1?true:false;
+
+        }
     }
 }

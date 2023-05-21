@@ -10,6 +10,7 @@ namespace HomematicApp.Context.Context
         { }
 
         public DbSet<User> Users { get; set; }
+		public DbSet<Parameters> Parameters { get; set; }
 
-    }
+	}
 }
