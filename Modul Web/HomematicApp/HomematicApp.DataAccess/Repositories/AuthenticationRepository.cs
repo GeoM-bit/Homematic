@@ -1,10 +1,14 @@
 ﻿using HomematicApp.Context.Context;
 using HomematicApp.Context.DbModels;
 using HomematicApp.Domain.Abstractions;
+using HomematicApp.Domain.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.VisualBasic;
+using System.Data;
 using System.Security.Policy;
 using System.Web;
 
@@ -16,12 +20,17 @@ namespace HomematicApp.DataAccess.Repositories
         private readonly IHashService _hashService;
         private readonly IEmailSender _emailSender;
         private readonly ITemplateFillerService _templateFillerService;
-        public AuthenticationRepository(HomematicContext context, IHashService hashService, IEmailSender emailSender, ITemplateFillerService templateFillerService)
+        private readonly ITokenService _tokenService;
+        private readonly IConfiguration _configuration;
+
+        public AuthenticationRepository(HomematicContext context, IHashService hashService, IEmailSender emailSender, ITemplateFillerService templateFillerService, ITokenService tokenService, IConfiguration configuration)
         {
             _context = context;
             _hashService = hashService;
             _emailSender = emailSender;
             _templateFillerService = templateFillerService;
+            _tokenService = tokenService;   
+            _configuration = configuration;
         }
 
         public async Task<bool> ConfirmResetPasswordRequest(string email, string token, string cookieToken)
@@ -69,7 +78,7 @@ namespace HomematicApp.DataAccess.Repositories
             return false;
         }
 
-        public async Task<bool> Login(LoginUser loginUser)
+        public async Task<string?> Login(LoginUser loginUser)
         {
             var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginUser.Email);
 
@@ -77,12 +86,22 @@ namespace HomematicApp.DataAccess.Repositories
             {
                 if (_hashService.VerifyPassword(loginUser.Password, dbUser.Password))
                 {
-                    return true;
+                    string role = GetRole(loginUser.Email).Result;
+                    if (role == null) 
+                    {
+                        return null;
+                    }
+                    string generatedToken = _tokenService.BuildToken(_configuration["Jwt:Key"].ToString(), _configuration["Jwt:Issuer"].ToString(), loginUser.Email, role);
+                    if (generatedToken != null)
+                    {
+                        return generatedToken;
+                    }
+                    else
+                       return null;
                 }
-                return false;
+                return null;
             }
-
-            return false;
+            return null;
         }
 
         public Task<bool> Logout()
@@ -119,6 +138,23 @@ namespace HomematicApp.DataAccess.Repositories
             }
 
             return false;
+        }
+
+        public async Task<string> GetRole(string email)
+        {
+            string result = "";
+            var dbUser = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            if (dbUser != null)
+            {
+                if (dbUser.Is_Admin)
+                {
+                    return Roles.ADMIN.ToString();
+                }
+                return Roles.USER.ToString();
+
+            }
+            else
+                return null;
         }
     }
 }

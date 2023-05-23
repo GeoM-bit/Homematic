@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using HomematicApp.Context.DbModels;
 using HomematicApp.Domain.Abstractions;
+using HomematicApp.Domain.Common;
 using HomematicApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MySqlX.XDevAPI.Common;
 using System.Web;
 
 namespace HomematicApp.Controllers
@@ -53,25 +56,45 @@ namespace HomematicApp.Controllers
             {
                 ViewBag.LoginFailed = bool.Parse(LoginFailed);
             }
+            if (HttpContext.Session.GetString("Token")!=null)
+            {
+                if (User.IsInRole(Roles.USER.ToString()))
+                {
+                    return RedirectToAction("ViewParameters", "User");
+                }
+                else if (User.IsInRole(Roles.ADMIN.ToString()))
+                {
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    HttpContext.Session.Remove("Token");
+                    return RedirectToAction("Login", new { LoginFailed = true });
+                }
+            }
             return View();
         }
         public async Task<IActionResult> LoginUser(LoginModel loginModel)
         {
             LoginUser loginUser = mapper.Map<LoginUser>(loginModel);
-            bool result = await authenticationRepository.Login(loginUser);
+            string? result = await authenticationRepository.Login(loginUser);
 
-            if (result)
+            if (result!=null)
             {
-                return RedirectToAction("Login");  //redirect to user/admin homepage when done
+                HttpContext.Session.SetString("Token", result);
+                return RedirectToAction("Login");
             }
             else
             {
                 return RedirectToAction("Login", new {LoginFailed = true});
             }
         }
+
+        [Authorize]
         public IActionResult Logout()
         {
-            return View();
+            HttpContext.Session.Remove("Token");
+            return RedirectToAction("Login");        
         }
 
         [Route("ResetPassword/{userEmail}/{userToken}", Name = "ResetPassword/{userEmail}/{userToken}")]
@@ -127,5 +150,17 @@ namespace HomematicApp.Controllers
             return View();
         }
 
+        public IActionResult Error(int? statusCode = null)
+        {
+            if (statusCode.HasValue)
+            {
+                if (statusCode == 401 || statusCode == 403 || statusCode == 404 || statusCode == 500)
+                {
+                    var viewName = statusCode.ToString();
+                    return View(viewName);
+                }
+            }
+            return View();
+        }
     }
 }
