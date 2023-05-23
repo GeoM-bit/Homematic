@@ -1,6 +1,42 @@
 ﻿@model HomematicApp.ViewModels.ViewParametersModel
 
 @{
-
+	ViewData["Title"] = "View Parameters";
+	ViewData["row-id"] = "Row Id";
+	ViewData["temperature"] = "Temperature";
+	ViewData["light-intensity"] = "Light Intensity";
+	ViewData["opened-door"] = "Opened Door";
 
 }
+
+<h1>View Parameters</h1>
+
+<div class="card shadow mb-4">
+	<div class="card-body">
+		<div class="table-responsive">
+			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+				<thead>
+					<tr>
+
+						<th class="text-center">@ViewData["row-id"]</th>
+						<th class="text-center">@ViewData["temperature"]</th>
+						<th class="text-center">@ViewData["light-intensity"]</th>
+						<th class="text-center">@ViewData["opened-door"]</th>
+						<th class="text-center" data-orderable="false">@ViewData["action"]</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model.ViewParameters)
+					{
+						<tr>
+							<td>@item.row_id</td>
+							<td>@item.temperature</td>
+							<td>@item.light_intensity</td>
+							<td>@item.opened_door</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

@@ -28,5 +28,11 @@ namespace HomematicApp.DataAccess.Repositories
             return result==1?true:false;
 
         }
+
+        public async Task<List<Parameters>> GetParameters()
+        {
+            return await _context.Parameters.ToListAsync();
+        }
+
     }
 }

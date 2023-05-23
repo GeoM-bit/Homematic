@@ -11,5 +11,7 @@ namespace HomematicApp.Domain.Abstractions
     {
         Task<List<User>> GetUsers();
         Task<bool> DeleteUser(string email);
-    }
+
+		Task<List<Parameters>> GetParameters();
+	}
 }

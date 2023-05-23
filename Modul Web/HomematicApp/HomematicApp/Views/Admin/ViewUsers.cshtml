@@ -32,14 +32,14 @@
 					{
 						<tr>
 							<td>@item.Device_Id</td>
-							<td>@item.Email</td>
 							<td>@item.First_Name</td>
 							<td>@item.Last_Name</td>
 							<td>@item.CNP</td>
+							<td>@item.Email</td>
 								<th>
 									<div class="btn-group-vertical">
-									<form method="post" asp-action="DeleteUser" asp-route-Id="@item.Email">
-                                        <input type="button" value="Delete" class="btn btn-outline-danger mb-2" onclick="deleteConfirm('@item.Email')">
+									<form method="post" asp-action="DeleteUser" asp-route-Id='@item.Email'>
+                                        <button id="delete-user" class="btn btn-outline-danger mb-2" data-user-id="@item.Email">Delete</button>
 										</form>
 									</div>
 								</th>
@@ -51,60 +51,44 @@
 	</div>
 </div>
 
-  <div class="modal fade" id="delete-conformation" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
-<div class="modal-dialog" style="width:501px !important;margin:0 auto;">
-    <div class="modal-content">
-        <div class="modal-header" style="background:#d9534f;color:white;">
-            <h4 class="modal-title" id="delete-conformation">
-                Delete Confirmation
-            </h4>
-        </div>
-        <div class="modal-body">
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        <span>
-                            Are you sure you want to delete 
-                        </span>
-                        <strong id="deletedValueName">
-                        </strong>
-                        <span>
-                            ?
-                            </span> 
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <input type="submit" class="btn btn-danger" value="Delete" onclick="deleteData()" />
-            </div>
-        </div>
-    </div>
-</div>
-</div>
 
-@section Scripts{
-    <script type="text/javascript">
-         //this is only display bootstrap modal pop up dialog
-         var deleteConfirm = function (val) {
-             $('#deletedValueName').text(val);
-             $('#delete-conformation').modal('show');
-         }
-         //call this function after click on confirm delete button
-         var deleteData = function () {
-         $('#divLoading').show();
-         var id = $('#id').val();
-         $.ajax({
-             type: "POST",
-                url: '@Url.Action("DeleteUser","Admin")',
-             data:{id: id},
-             success: function (result) {
-                $("#delete-conformation").modal('hide');
-             },
-             error: function () {
-                 $("#delete-conformation").modal('hide');
-             }
-         });
-        }
-    </script>
-}
+  
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+	$(document).ready(function () {
+		$('.delete-user').click(function () {
+			var userId = $(this).data('user-id');
+			console.log(userId);
+			var userName = $(this).closest('tr').find('td:first').text();
+			var confirmationMessage = 'Are you sure you want to delete the user: ' + userName + '?';
+			console.log(userName);
+			// Show the confirmation dialog
+			if (confirm(confirmationMessage)) {
+				// User confirmed, perform the delete action
+				deleteUser(userId);
+			}
+		});
+
+		function deleteUser(userId) {
+			// Send an AJAX request to delete the user
+			$.ajax({
+				url: '/Admin/Delete', // Replace with your delete action URL
+				type: 'POST',
+				data: { id: userId },
+				success: function () {
+					// Handle the success case, such as refreshing the table
+					location.reload();
+				},
+				error: function () {
+					// Handle the error case
+					alert('An error occurred while deleting the user.');
+				}
+			});
+		}
+	});
+</script>
