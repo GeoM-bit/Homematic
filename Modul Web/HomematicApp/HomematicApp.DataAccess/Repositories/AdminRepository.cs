@@ -16,7 +16,7 @@ namespace HomematicApp.DataAccess.Repositories
         }
         public async Task<List<User>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Where(u=>u.Is_Admin==false).ToListAsync();
         }
 
         public async Task<bool> DeleteUser(string email)
