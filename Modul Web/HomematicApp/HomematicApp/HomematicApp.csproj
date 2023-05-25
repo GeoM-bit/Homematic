@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Admin\" />
     <Folder Include="Views\Shared\Errors\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>

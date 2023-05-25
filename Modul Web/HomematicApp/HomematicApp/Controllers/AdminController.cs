@@ -19,15 +19,27 @@ namespace HomematicApp.Controllers
         }
         public async Task<IActionResult> ViewUsers()
         {
-            var result= await adminRepository.GetUsers();
+			var DeleteSuccessful = Request.Query["DeleteSuccessful"].ToString();
+			if (!string.IsNullOrEmpty(DeleteSuccessful))
+			{
+				ViewBag.DeleteSuccessful = bool.Parse(DeleteSuccessful);
+			}
+			var result= await adminRepository.GetUsers();
             var list = mapper.Map<List<UserModel>>(result);
             var viewUsersModel=new ViewUsersModel { ViewUsers = list };
             return View(viewUsersModel);
         }
-		
-		public async Task<IActionResult> DeleteUser()
-		{	
-			return RedirectToAction("ViewUsers");
+
+		[HttpPost]
+		public async Task<IActionResult> DeleteUser([FromBody] DeleteModel deleteModel) 
+		{
+           var result=await adminRepository.DeleteUser(deleteModel.Email);
+			
+			if(result)
+			    return RedirectToAction("ViewUsers", new { DeleteSuccessful = true });
+            else
+				return RedirectToAction("ViewUsers", new { DeleteSuccessful = false });
+
 		}
 
 		public async Task<IActionResult> ViewParameters()

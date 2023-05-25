@@ -5,7 +5,6 @@ using HomematicApp.Domain.Common;
 using HomematicApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MySqlX.XDevAPI.Common;
 using System.Web;
 
 namespace HomematicApp.Controllers
