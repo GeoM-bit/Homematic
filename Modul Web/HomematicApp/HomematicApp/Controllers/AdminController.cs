@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HomematicApp.Context.DbModels;
 using HomematicApp.Domain.Abstractions;
+using HomematicApp.Domain.Common;
 using HomematicApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -23,25 +24,27 @@ namespace HomematicApp.Controllers
             var viewUsersModel=new ViewUsersModel { ViewUsers = list };
             return View(viewUsersModel);
         }
-
-		//[Route("Admin/DeleteUser/{email}")]
 		
 		public async Task<IActionResult> DeleteUser()
-		{
-          /// var email1 = (string)HttpContext.GetRouteData().Values["email"];
-            
-          //var res = HttpContext.Request.Body.ToString();
-           // var result=await adminRepository.DeleteUser(email1);
-			
+		{	
 			return RedirectToAction("ViewUsers");
 		}
 
 		public async Task<IActionResult> ViewParameters()
 		{
 			var result = await adminRepository.GetParameters();
-			var list = mapper.Map<List<ParametersModel>>(result);
-			var viewParametersModel = new ViewParametersModel { ViewParameters = list };
-			return View(viewParametersModel);
+			var model = mapper.Map<ParametersModel>(result);
+			
+			return View(model);
+		}
+
+		public async Task<IActionResult>ModifyParameters(ParametersModel parametersModel)
+        {
+           Parameters parameters=mapper.Map<Parameters>(parametersModel);
+            var result = await adminRepository.Modify(parameters);
+           
+                return RedirectToAction("ViewParameters");
+           
 		}
 
 	}

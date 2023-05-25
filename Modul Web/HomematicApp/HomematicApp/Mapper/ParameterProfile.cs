@@ -11,7 +11,6 @@ namespace HomematicApp.Mapper
 		{
 			CreateMap<ParametersModel, Parameters>();
 			CreateMap<Parameters, ParametersModel>();
-			
 		}
 	}
 }
