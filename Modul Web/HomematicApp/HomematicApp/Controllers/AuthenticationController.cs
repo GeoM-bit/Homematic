@@ -64,7 +64,7 @@ namespace HomematicApp.Controllers
 				}
 				else if (User.IsInRole(Roles.ADMIN.ToString()))
 				{
-					return RedirectToAction("ViewParameters", "Admin");
+					return RedirectToAction("ViewParameters", "User");
 				}
 				else
 				{

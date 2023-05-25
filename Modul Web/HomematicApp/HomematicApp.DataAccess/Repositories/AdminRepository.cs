@@ -10,20 +10,9 @@ namespace HomematicApp.DataAccess.Repositories
     public class AdminRepository : IAdminRepository
     {
         private readonly HomematicContext _context;
-		private readonly IHashService _hashService;
-		private readonly IEmailSender _emailSender;
-		private readonly ITemplateFillerService _templateFillerService;
-		private readonly ITokenService _tokenService;
-		private readonly IConfiguration _configuration;
-		public AdminRepository(HomematicContext context, IHashService hashService, IEmailSender emailSender, ITemplateFillerService templateFillerService, ITokenService tokenService, IConfiguration configuration)
+		public AdminRepository(HomematicContext context)
         {
             _context = context;
-			_hashService = hashService;
-			_emailSender = emailSender;
-			_templateFillerService = templateFillerService;
-			_tokenService = tokenService;
-			_configuration = configuration;
-
 		}
         public async Task<List<User>> GetUsers()
         {
@@ -38,21 +27,6 @@ namespace HomematicApp.DataAccess.Repositories
             var result=await _context.SaveChangesAsync();
             return result==1?true:false;
 
-        }
-
-        public async Task<Parameters> GetParameters()
-        { 
-            var result= await _context.Parameters.ToListAsync();
-			return result[0];
-        }
-
-        public async Task<bool> Modify(Parameters parameters)
-        {
-            parameters.Row_id = 1;
-			_context.Parameters.Update(parameters);
-
-			return await _context.SaveChangesAsync() == 1;
-			
         }
 	}
 }

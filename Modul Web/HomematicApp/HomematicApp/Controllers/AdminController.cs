@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using HomematicApp.Context.DbModels;
 using HomematicApp.Domain.Abstractions;
-using HomematicApp.Domain.Common;
 using HomematicApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
+
 
 namespace HomematicApp.Controllers
 {
@@ -42,22 +40,6 @@ namespace HomematicApp.Controllers
 
 		}
 
-		public async Task<IActionResult> ViewParameters()
-		{
-			var result = await adminRepository.GetParameters();
-			var model = mapper.Map<ParametersModel>(result);
-			
-			return View(model);
-		}
-
-		public async Task<IActionResult>ModifyParameters(ParametersModel parametersModel)
-        {
-           Parameters parameters=mapper.Map<Parameters>(parametersModel);
-            var result = await adminRepository.Modify(parameters);
-           
-                return RedirectToAction("ViewParameters");
-           
-		}
 
 	}
 }
