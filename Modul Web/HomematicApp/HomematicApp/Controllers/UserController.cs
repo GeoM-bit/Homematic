@@ -33,7 +33,7 @@ namespace HomematicApp.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> CreateEvent()
+        public async Task<IActionResult> CreateEvent(PresetModel model)
         {
             return View();
         }

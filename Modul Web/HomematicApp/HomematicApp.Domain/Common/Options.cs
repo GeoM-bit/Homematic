@@ -10,5 +10,7 @@
             Time = time;
             Value = value;  
         }
+
+        public Options() { }    
     }
 }

@@ -35,17 +35,15 @@
                                     <a class="nav-link text-dark"> <img height="20px" width="20px" src="~/img/user.png" />  Hello, @User.Identity.Name!</a>
                                 </button>
                                 <div class="my-dropdown-content">
-                                            @if (User.IsInRole("USER"))
-                                            {
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewActions">View Actions</a>
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewPresets">View Presets</a>
-                                            }
-                                            else if (User.IsInRole("ADMIN"))
+                                            @if (User.IsInRole("ADMIN"))
                                             {
                                             <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Register">Register Users</a>
                                             }
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewParameters">View Parameters</a>
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Logout">Logout</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewActions">View Actions</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewParameters">View Parameters</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewPresets">View Presets</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CreateEvent">Create event</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Logout">Logout</a>                                   
                                 </div>
                             </div>                         
                           </li>
