@@ -52,14 +52,14 @@
             <div class="form-group row spacing">
                 <div class="col-sm-6">
                 <label asp-for="Light.Time">@ViewData["time"]</label>
-                <input type="time" class="form-control" asp-for="Light.Time"
+                    <input type="time" class="form-control" asp-for="Light.Time"
                    placeholder=@ViewData["time"]>
             </div>
         <div class="col-sm-6">
             <label asp-for="Light.Value" >@ViewData["value"]</label>                           
-            <input type="range" id="lightRangeId" min="0" max="100" value ="0" class="custom-range" 
-                                   placeholder=@ViewData["value"] oninput="this.nextElementSibling.value = this.value">
-                            <input type="text" asp-for="Light.Value" class="form-control" readonly style="max-width:200px">
+            <input type="range" id="lightRangeId" min="0" max="100" value ="0" class="custom-range"
+                           placeholder=@ViewData["value"] oninput="this.nextElementSibling.value = this.value">
+                            <input type="text" asp-for="Light.Value" class="form-control" readonly style="max-width:55px">
         </div>
         <div><strong>Temperature options</strong></div>
         <div class="form-group row spacing">
@@ -68,11 +68,11 @@
             <input type="time" class="form-control" asp-for="Temperature.Time"
                    placeholder=@ViewData["time"]>
         </div>
-        <div class="col-sm-6">
-            <label asp-for="Temperature.Value" >@ViewData["value"]</label>                           
-            <input type="range" id="lightRangeId" min="0" max="40" value ="0" class="custom-range" 
-                                   placeholder=@ViewData["value"] oninput="this.nextElementSibling.value = this.value">
-                            <input type="text" asp-for="Temperature.Value" class="form-control" readonly style="max-width:200px">
+            <div class="col-sm-6">
+                        <label asp-for="Temperature.Value" style="margin-left:5%">@ViewData["value"]</label>
+                        <input type="range" id="lightRangeId" min="0" max="40" value ="0" class="custom-range" 
+                                   placeholder=@ViewData["value"] oninput="this.nextElementSibling.value = this.value" >
+                        <input type="text" asp-for="Temperature.Value" class="form-control" readonly style="max-width:55px; margin-left:5%">
         </div>
     </div>
     </div>
