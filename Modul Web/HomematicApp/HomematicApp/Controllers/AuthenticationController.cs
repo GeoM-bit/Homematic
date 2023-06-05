@@ -20,8 +20,8 @@ namespace HomematicApp.Controllers
             mapper = _mapper;
         }
 
-        [Authorize(Roles = "ADMIN")]
-        public IActionResult Register()
+        [Authorize(Roles="ADMIN")]
+        public async Task<IActionResult> Register(UserModel? userModel)
         {
             var RegisterSuccess = Request.Query["RegisterSuccess"].ToString();
             if (!string.IsNullOrEmpty(RegisterSuccess))
@@ -32,31 +32,28 @@ namespace HomematicApp.Controllers
             {
                 ViewBag.RegisterFailed = bool.Parse(RegisterSuccess);
             }
-            return View();
-        }
 
-        [Authorize(Roles="ADMIN")]
-        public async Task<IActionResult> RegisterUser(UserModel userModel)
-        {
-            User user = mapper.Map<User>(userModel);
-            bool result = await authenticationRepository.Register(user);
-            if (result)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Register", new {RegisterSuccess=true});
+                User user = mapper.Map<User>(userModel);
+                bool result = await authenticationRepository.Register(user);
+                if (result)
+                {
+                    return RedirectToAction("Register", new { RegisterSuccess = true });
+                }
+                else
+                {
+                    return RedirectToAction("Register", new { RegisterSuccess = false });
+                }
             }
             else
             {
-                return RedirectToAction("Register", new { RegisterSuccess = false });
+                return View();
             }
         }
 
-		public IActionResult Login()
+        public IActionResult Login()
 		{
-			var RegisterSuccess = Request.Query["RegisterSuccess"].ToString();
-			if (!string.IsNullOrEmpty(RegisterSuccess))
-			{
-				ViewBag.RegisterSuccess = bool.Parse(RegisterSuccess);
-			}
 			var LoginFailed = Request.Query["LoginFailed"].ToString();
 			if (!string.IsNullOrEmpty(LoginFailed))
 			{

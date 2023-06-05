@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using HomematicApp.Context.DbModels;
-using HomematicApp.DataAccess.Repositories;
 using HomematicApp.Domain.Abstractions;
 using HomematicApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -49,10 +48,10 @@ namespace HomematicApp.Controllers
 			return View(new PresetListModel { Presets = list});
         }
 
-        public async Task<IActionResult> ModifyParameters(ParametersModel parametersModel)
+        public async Task<IActionResult> ModifyParameters(ParameterModel parametersModel)
         {
-            Parameters parameters = mapper.Map<Parameters>(parametersModel);
-            var result = await userRepository.Modify(parameters);
+            Parameter parameters = mapper.Map<Parameter>(parametersModel);
+            var result = await userRepository.modifyParameters(parameters);
 
             return RedirectToAction("ViewParameters");
 

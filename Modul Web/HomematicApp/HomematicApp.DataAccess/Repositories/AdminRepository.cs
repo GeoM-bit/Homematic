@@ -1,9 +1,7 @@
 ﻿using HomematicApp.Context.Context;
 using HomematicApp.Context.DbModels;
 using HomematicApp.Domain.Abstractions;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace HomematicApp.DataAccess.Repositories
 {
@@ -16,17 +14,33 @@ namespace HomematicApp.DataAccess.Repositories
 		}
         public async Task<List<User>> GetUsers()
         {
-			return await _context.Users.Where(u => u.Is_Admin == false).ToListAsync();
+            var result = await _context.Users.Where(u => u.Is_Admin == false).ToListAsync();
+            return await _context.Users.Where(u => u.Is_Admin == false).ToListAsync();
 		}
 
         public async Task<bool> DeleteUser(string email)
         {
-
-        var user=  await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
-            _context.Users.Remove(user);
-            var result=await _context.SaveChangesAsync();
-            return result==1?true:false;
-
+            var user =  await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            if (user != null)
+            {
+                var actions = await _context.Actions.Where(a => a.Device_Id == user.Device_Id).ToListAsync();
+                var events = await _context.Presets.Where(p => p.Device_Id == user.Device_Id).ToListAsync();
+				if (actions != null)
+				{
+					foreach (var action in actions)
+						_context.Actions.Remove(action);
+				}
+				if (events != null)
+				{
+					foreach (var ev in events)
+						_context.Presets.Remove(ev);
+				}
+			}
+            if (user != null) {
+                _context.Users.Remove(user);
+            }          
+            var result = await _context.SaveChangesAsync();
+            return result !=0 ? true : false;
         }
 	}
 }

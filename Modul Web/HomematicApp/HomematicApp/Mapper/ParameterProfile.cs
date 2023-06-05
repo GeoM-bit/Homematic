@@ -6,11 +6,10 @@ namespace HomematicApp.Mapper
 {
 	public class ParameterProfile:Profile
 	{
-
 		public ParameterProfile()
 		{
-			CreateMap<ParametersModel, Parameters>();
-			CreateMap<Parameters, ParametersModel>();
+			CreateMap<ParameterModel, Parameter>();
+			CreateMap<Parameter, ParameterModel>();
 		}
 	}
 }

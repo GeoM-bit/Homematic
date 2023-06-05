@@ -10,30 +10,30 @@
 	ViewData["action"] = "Delete User";
 	ViewData["success-message"] = "The user was successfully deleted!";
 	ViewData["failure-message"] = "The user could not be deleted!";
-
-
 }
 
-<div class="form-group row">
-	@if (ViewBag.DeleteSuccessful == true)
-	{
-		<div class="alert alert-success" role="alert">
-			<span class="closebtn" onclick="this.parentElement.style.display='none'">×</span>
-			@ViewData["success-message"]
-		</div>
-	}
-	@if (ViewBag.DeleteSuccessful == false)
-	{
-		<div class="alert alert-danger" role="alert">
-			<span class="closebtn" onclick="this.parentElement.style.display='none'">×</span>
-			@ViewData["failure-message"]
-		</div>
-	}
-</div>
-
 <h1>View Users</h1>
+<form class="user" method="post" asp-action="DeleteUser">
+
 <div class="card shadow mb-4">
 	<div class="card-body">
+
+		<div class="form-group row">
+			@if (ViewBag.DeleteSuccessful == true)
+			{
+				<div class="alert alert-success" role="alert">
+					<span class="closebtn" onclick="this.parentElement.style.display='none'">×</span>
+					@ViewData["success-message"]
+				</div>
+			}
+			@if (ViewBag.DeleteSuccessful == false)
+			{
+				<div class="alert alert-danger" role="alert">
+					<span class="closebtn" onclick="this.parentElement.style.display='none'">×</span>
+					@ViewData["failure-message"]
+				</div>
+			}
+		</div>
 		<div class="table-responsive">
 			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 				<thead>
@@ -95,39 +95,29 @@
 			</div>
 			</div>
 			<div class="modal-footer">
+				<input asp-for="Email" hidden id="emailInput" value="@Model.Email" />
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x"></i> Cancel</button>
-				<button type="button" class="btn btn-danger" id="btnDelete"><i class="bi bi-x"></i> Delete </button>
+				<button type="submit" class="btn btn-danger" id="btnDelete"><i class="bi bi-x"></i> Delete </button>
 			</div>
-
 		</div>
 	</div>
 </div>
+</form>
+
 <!--delete modal ends here--->
 @section Scripts{
 	<script type="text/javascript">
 		function DisplayConfirmDeleteModal(Email) {
-			console.log(Email)
 			$("#UserEmailToDelete").text(Email);
 			$("#UserEmailToDelete").val(Email);
 			$("#deleteModal").modal('show');
+			document.getElementById('emailInput').value = Email;		
 		}
 
 		$(document).ready(function () {
-			$("#btnDelete").on("click", function () {
-				let Email = $("#UserEmailToDelete").val();
-				let UrlHandler = "/Admin/DeleteUser";
-				$.ajax({
-					url: UrlHandler,
-					type: 'POST',
-					contentType: "application/json; charset=utf-8",
-					data: JSON.stringify({ "Email": Email }),					
-				});
+			$("#btnDelete").on("click", function () {			
 				$("#deleteModal").modal('hide');
-				window.location.reload();
-			});
-		});
-
-
-		
+			});			
+		});	
 	</script>
 }

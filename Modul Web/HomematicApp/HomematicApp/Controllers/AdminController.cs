@@ -3,7 +3,6 @@ using HomematicApp.Domain.Abstractions;
 using HomematicApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace HomematicApp.Controllers
 {
     public class AdminController : Controller
@@ -29,7 +28,7 @@ namespace HomematicApp.Controllers
         }
 
 		[HttpPost]
-		public async Task<IActionResult> DeleteUser([FromBody] DeleteModel deleteModel) 
+		public async Task<IActionResult> DeleteUser(DeleteModel deleteModel) 
 		{
            var result=await adminRepository.DeleteUser(deleteModel.Email);
 			
@@ -37,9 +36,6 @@ namespace HomematicApp.Controllers
 			    return RedirectToAction("ViewUsers", new { DeleteSuccessful = true });
             else
 				return RedirectToAction("ViewUsers", new { DeleteSuccessful = false });
-
 		}
-
-
 	}
 }

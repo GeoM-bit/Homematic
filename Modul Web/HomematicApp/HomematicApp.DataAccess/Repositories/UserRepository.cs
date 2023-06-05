@@ -10,12 +10,12 @@ using Action = HomematicApp.Context.DbModels.Action;
 namespace HomematicApp.DataAccess.Repositories
 {
     public class UserRepository : IUserRepository
-	{
-		private readonly HomematicContext _context;
-		public UserRepository(HomematicContext context)
-		{
-			_context = context;
-		}
+    {
+        private readonly HomematicContext _context;
+        public UserRepository(HomematicContext context)
+        {
+            _context = context;
+        }
 
         public async Task<List<Action>> getActions(string email)
         {
@@ -24,33 +24,28 @@ namespace HomematicApp.DataAccess.Repositories
             return await _context.Actions.Where(a => a.Device_Id == dbUser.Device_Id).ToListAsync();
         }
 
-		public void modifyParameters(Parameter parameter)
-		{
-			
-		}
+        public async Task<Parameter> getParameters()
+        {
+            var result = await _context.Parameters.ToListAsync();
+            return result[0];
+        }
 
-		public async Task<Parameter> getParameters()
-		{
-			var result = await _context.Parameters.ToListAsync();
-			return result[0];
-		}
-
-		public async Task<List<PresetModelDTO>> getPresetList(string email)
-		{
-            var dbUser = await _context.Users.FirstOrDefaultAsync(u=>u.Email == email);
+        public async Task<List<PresetModelDTO>> getPresetList(string email)
+        {
+            var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
             if (dbUser == null) return null;
-            var dbList = await _context.Presets.Where(p => p.Device_Id == null || p.Device_Id==dbUser.Device_Id).ToListAsync();
+            var dbList = await _context.Presets.Where(p => p.Device_Id == null || p.Device_Id == dbUser.Device_Id).ToListAsync();
             List<PresetModelDTO> decodedList = new List<PresetModelDTO>();
-            if(dbList!=null)
+            if (dbList != null)
             {
-                foreach(var preset in dbList)
+                foreach (var preset in dbList)
                 {
                     var decodedPreset = decodePreset(preset);
                     decodedList.Add(decodedPreset);
                 }
-            }		
+            }
             return decodedList;
-		}
+        }
 
         public PresetModelDTO decodePreset(Preset preset)
         {
@@ -66,42 +61,44 @@ namespace HomematicApp.DataAccess.Repositories
 
             string[] splits = preset.Option_Code.Split('.');
 
-            for(int i = 1; i<= int.Parse(splits[0]); i++)
-		{
-                TimeOnly time = new TimeOnly(int.Parse(splits[i].Substring(0,2)), int.Parse(splits[i].Substring(2,2)));
+            for (int i = 1; i <= int.Parse(splits[0]); i++)
+            {
+                TimeOnly time = new TimeOnly(int.Parse(splits[i].Substring(0, 2)), int.Parse(splits[i].Substring(2, 2)));
                 string tempValue = splits[i].Substring(4, 2);
                 string lightValue = splits[i].Substring(6, 3);
-                if (tempValue != "XX") {
-                    if(tempValue.StartsWith("0"))
+                if (tempValue != "XX")
+                {
+                    if (tempValue.StartsWith("0"))
                     {
-                        tempValue = tempValue.Substring(1,1);
+                        tempValue = tempValue.Substring(1, 1);
 
-					}
-					Options tempOptions = new Options(time, tempValue);
-					result.Temperature_Options.Add(tempOptions);
-				}
+                    }
+                    Options tempOptions = new Options(time, tempValue);
+                    result.Temperature_Options.Add(tempOptions);
+                }
                 if (lightValue != "XXX")
                 {
-					if (lightValue.StartsWith("0"))
-					{
-						lightValue = lightValue.Substring(1, 2);
+                    if (lightValue.StartsWith("0"))
+                    {
+                        lightValue = lightValue.Substring(1, 2);
                         if (lightValue.StartsWith("0"))
                         {
                             lightValue = lightValue.Substring(1, 1);
-						}
-					}
-					Options lightOptions = new Options(time, lightValue);
+                        }
+                    }
+                    Options lightOptions = new Options(time, lightValue);
                     result.Light_Options.Add(lightOptions);
                 }
-			}
+            }
 
             return result;
-		}
-        public async Task<bool> Modify(Parameters parameters)
+        }
+        public async Task<bool> modifyParameters(Parameter parameters)
         {
-            parameters.Row_id = 1;
-			_context.Parameters.Update(parameters);
+            parameters.Row_Id = 1;
+            _context.Parameters.Update(parameters);
 
             return await _context.SaveChangesAsync() == 1;
         }
+    }
 }
