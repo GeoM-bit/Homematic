@@ -12,7 +12,7 @@ using System.Data;
 using System.Security.Policy;
 using System.Web;
 
-namespace HomematicApp.Repositories
+namespace HomematicApp.DataAccess.Repositories
 {
     public class AuthenticationRepository : IAuthenticationRepository
     {
