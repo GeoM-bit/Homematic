@@ -4,11 +4,13 @@ using HomematicApp.ViewModels;
 
 namespace HomematicApp.Mapper
 {
-	public class ParameterProfile : Profile
+	public class ParameterProfile:Profile
 	{
+
 		public ParameterProfile()
 		{
-			CreateMap<Parameter, ParameterModel>();
+			CreateMap<ParametersModel, Parameters>();
+			CreateMap<Parameters, ParametersModel>();
 		}
 	}
 }

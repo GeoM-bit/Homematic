@@ -9,6 +9,7 @@ namespace HomematicApp.Mapper
         public UserProfile() {
             CreateMap<UserModel, User>();
             CreateMap<LoginModel, LoginUser>();
+            CreateMap<User, UserModel>().ForMember(dest=>dest.Password, opt=>opt.Ignore());
         }
     }
 }

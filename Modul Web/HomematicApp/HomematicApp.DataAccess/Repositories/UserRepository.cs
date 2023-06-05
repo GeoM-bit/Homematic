@@ -6,15 +6,16 @@ using HomematicApp.Domain.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Action = HomematicApp.Context.DbModels.Action;
 
+
 namespace HomematicApp.DataAccess.Repositories
 {
     public class UserRepository : IUserRepository
-    {
-        private readonly HomematicContext _context;
-        public UserRepository(HomematicContext context)
-        {
-            _context = context;
-        }
+	{
+		private readonly HomematicContext _context;
+		public UserRepository(HomematicContext context)
+		{
+			_context = context;
+		}
 
         public async Task<List<Action>> getActions(string email)
         {
@@ -30,8 +31,8 @@ namespace HomematicApp.DataAccess.Repositories
 
 		public async Task<Parameter> getParameters()
 		{
-            var result = await _context.Parameters.ToListAsync();
-            return result[0];
+			var result = await _context.Parameters.ToListAsync();
+			return result[0];
 		}
 
 		public async Task<List<PresetModelDTO>> getPresetList(string email)
@@ -66,7 +67,7 @@ namespace HomematicApp.DataAccess.Repositories
             string[] splits = preset.Option_Code.Split('.');
 
             for(int i = 1; i<= int.Parse(splits[0]); i++)
-            {
+		{
                 TimeOnly time = new TimeOnly(int.Parse(splits[i].Substring(0,2)), int.Parse(splits[i].Substring(2,2)));
                 string tempValue = splits[i].Substring(4, 2);
                 string lightValue = splits[i].Substring(6, 3);
@@ -74,7 +75,7 @@ namespace HomematicApp.DataAccess.Repositories
                     if(tempValue.StartsWith("0"))
                     {
                         tempValue = tempValue.Substring(1,1);
-						
+
 					}
 					Options tempOptions = new Options(time, tempValue);
 					result.Temperature_Options.Add(tempOptions);
@@ -95,6 +96,12 @@ namespace HomematicApp.DataAccess.Repositories
 			}
 
             return result;
+		}
+        public async Task<bool> Modify(Parameters parameters)
+        {
+            parameters.Row_id = 1;
+			_context.Parameters.Update(parameters);
+
+            return await _context.SaveChangesAsync() == 1;
         }
-	}
 }

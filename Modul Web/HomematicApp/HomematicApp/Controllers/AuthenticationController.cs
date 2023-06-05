@@ -50,32 +50,38 @@ namespace HomematicApp.Controllers
             }
         }
 
-        public IActionResult Login()
-        {           
-            var LoginFailed = Request.Query["LoginFailed"].ToString();
-            if (!string.IsNullOrEmpty(LoginFailed))
-            {
-                ViewBag.LoginFailed = bool.Parse(LoginFailed);
-            }
-            if (HttpContext.Session.GetString("Token")!=null)
-            {
-                if (User.IsInRole(Roles.USER.ToString()))
-                {
-                    return RedirectToAction("ViewActions", "User");
-                }
-                else if (User.IsInRole(Roles.ADMIN.ToString()))
-                {
-                    return RedirectToAction("ViewActions", "User");
-                }
-                else
-                {
-                    HttpContext.Session.Remove("Token");
-                    return RedirectToAction("Login", new { LoginFailed = true });
-                }
-            }
-            return View();
-        }
-        public async Task<IActionResult> LoginUser(LoginModel loginModel)
+		public IActionResult Login()
+		{
+			var RegisterSuccess = Request.Query["RegisterSuccess"].ToString();
+			if (!string.IsNullOrEmpty(RegisterSuccess))
+			{
+				ViewBag.RegisterSuccess = bool.Parse(RegisterSuccess);
+			}
+			var LoginFailed = Request.Query["LoginFailed"].ToString();
+			if (!string.IsNullOrEmpty(LoginFailed))
+			{
+				ViewBag.LoginFailed = bool.Parse(LoginFailed);
+			}
+			if (HttpContext.Session.GetString("Token") != null)
+			{
+				if (User.IsInRole(Roles.USER.ToString()))
+				{
+					return RedirectToAction("ViewParameters", "User");
+				}
+				else if (User.IsInRole(Roles.ADMIN.ToString()))
+				{
+					return RedirectToAction("ViewParameters", "User");
+				}
+				else
+				{
+					HttpContext.Session.Remove("Token");
+					return RedirectToAction("Login", new { LoginFailed = true });
+				}
+			}
+			return View();
+		}
+
+		public async Task<IActionResult> LoginUser(LoginModel loginModel)
         {
             LoginUser loginUser = mapper.Map<LoginUser>(loginModel);
             string? result = await authenticationRepository.Login(loginUser);

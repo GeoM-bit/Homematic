@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Web;
 
-namespace HomematicApp.Repositories
+namespace HomematicApp.DataAccess.Repositories
 {
     public class AuthenticationRepository : IAuthenticationRepository
     {
