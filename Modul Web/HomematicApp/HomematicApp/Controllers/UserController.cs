@@ -59,17 +59,12 @@ namespace HomematicApp.Controllers
         }
 
         [HttpPost]
-        public async Task<List<object>> GetTemperature()
+        public async Task<List<object>> GetChartData([FromBody] ChartDataModel chartDataModel)
         {
 			var email = HttpContext.User.Identity.Name;
-            var result = await userRepository.getTemperature(email);
-			List<string> labels = (List<string>)result.OrderBy(a=>a.Date_Time).Select(x => x.Date_Time.ToString("HH:mm")).ToList();
-            List<float> temperatures = (List<float>)result.Select(x => x.Value_Action).ToList();
-            List<object> data = new();
-            data.Add(labels);   
-            data.Add(temperatures);
-
-            return data;
+            var result = await userRepository.getChartData(email, (ActionType)Enum.Parse(typeof(ActionType),chartDataModel.action));
+			
+            return result;
 		}
 	}
 }

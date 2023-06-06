@@ -4,6 +4,7 @@ using HomematicApp.Domain.Abstractions;
 using HomematicApp.Domain.Common;
 using HomematicApp.Domain.DTOs;
 using Microsoft.EntityFrameworkCore;
+using MySqlX.XDevAPI.Common;
 using Action = HomematicApp.Context.DbModels.Action;
 
 
@@ -113,11 +114,28 @@ namespace HomematicApp.DataAccess.Repositories
 			return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<List<Action>> getTemperature(string email)
+        public async Task<List<object>?> getChartData(string email, ActionType actionType)
         {
+			List<object> data = new();
 			var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-			if (dbUser == null) return null;
-			return await _context.Actions.Where(a => a.Device_Id == dbUser.Device_Id && a.Action_Type==ActionType.temperature && a.Date_Time.Date==DateTime.Parse("2023-05-23").Date).ToListAsync();
-		}
+            if (dbUser != null && actionType!=0)          
+            {
+
+                List<string> labels = new();
+                List<float> values = new();
+				var result = await _context.Actions.Where(a => a.Device_Id == dbUser.Device_Id && a.Action_Type == actionType && a.Date_Time.Date == DateTime.Parse("2023-05-23").Date).ToListAsync();
+                if (result != null)
+                {
+                    labels = result.OrderBy(a => a.Date_Time).Select(x => x.Date_Time.ToString("HH:mm")).ToList();
+                    values = result.OrderBy(a => a.Date_Time).Select(x => x.Value_Action).ToList();
+
+                    data.Add(labels);
+                    data.Add(values);
+
+                    return data;
+                }
+            }
+            return null;		
+        }
     }
 }

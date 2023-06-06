@@ -1,6 +1,6 @@
 ﻿public enum ActionType
 {
-	temperature,
+	temperature=1,
 	light,
 	door
 }

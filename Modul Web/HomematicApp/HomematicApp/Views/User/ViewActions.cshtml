@@ -34,12 +34,15 @@
 		</div>
 	</div>
 </div>
-<div class="row">
+
+<h1 style="margin-top:5%; margin-bottom:2%">View Charts</h1>
+
+<div class="row" style="margin-bottom:2%">
 	<div class="col-1">
 		<label><b>Chart-Type</b></label>
 		</div>
 	<div class="col-2">
-		<select id="ChartType" class="form-control" style="width:150px">
+		<select id="ChartType" class="form-control" style="width:200px">
 			<option selected>--Select Chart Type--</option>
 			<option>bar</option>
 			<option>line</option>
@@ -47,30 +50,76 @@
 			<option>doughnut</option>
 		</select>
 	</div>
-	<div class="col-4">
-		<input id="ID" value="Temperature Graph" type="button" />
+	<div class="col-2">
+		<select id="DataType" class="form-control" style="width:200px">
+			<option selected>--Select Data Type--</option>
+			<option>temperature</option>
+			<option>light</option>
+			<option>door</option>
+		</select>
 	</div>
-</div>
+	<div class="col-4">
+		<input id="ID" value="Show Graph" type="button" />
+	</div>
 
-<div id="ChartView">
-	<canvas id="myChart"></canvas>
 </div>
-
+<div class="table-responsive">
+	<table class="table" width="100%" celspacing="1">
+<tr>
+	<td style="min-width:400px; max-width:450px">
+<div id="TemperatureView">
+	<canvas id="temperatureChart"></canvas>
+</div>
+		</td>
+			<td style="min-width:400px; max-width:450px">
+				<div id="ESPView">
+					<canvas id="espChart"></canvas>
+				</div>
+			</td>
+		</tr>
+		<tr style="border:hidden">
+			<td style="min-width:400px; max-width:450px">
+				<div id="LightView">
+					<canvas id="lightChart"></canvas>
+				</div>
+			</td>
+			<td style="min-width:400px; max-width:450px">
+				<div id="DoorView">
+					<canvas id="doorChart"></canvas>
+				</div>
+			</td>
+</tr>
+	</table>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 <script type="text/javascript">
 	$(function () {
 		$("#ID").click(function(){
+			var actionType=$("#DataType").val();
 			var chartType=$("#ChartType").val();
-			var chartView = document.getElementById('ChartView');
-			chartView.innerHTML='$nbsp';
+			var temperatureView = document.getElementById('TemperatureView');
+			var lightView = document.getElementById('LightView');
+			var doorView = document.getElementById('DoorView');
 
-			$('#ChartView').append('<canvas id="myChart" style="max-width:450px;max-height:400px"></canvas>');
+			if (actionType == "temperature") {
+				temperatureView.innerHTML = '&nbsp;';
+				$('#TemperatureView').append('<canvas id="temperatureChart" style="max-width:450px;max-height:400px"></canvas>');
+			}
+			else if (actionType == "light") {
+				lightView.innerHTML = '&nbsp;';
+				$('#LightView').append('<canvas id="lightChart" style="max-width:450px;max-height:400px"></canvas>');
+			}
+			else if (actionType == "door") {
+				doorView.innerHTML = '&nbsp;';
+				$('#DoorView').append('<canvas id="doorChart" style="max-width:450px;max-height:400px"></canvas>');
+			}
+			
 			$.ajax({
 				type:"POST",
-				url:"/User/GetTemperature",
-				data:"",
+				url:"/User/GetChartData",
+				data: JSON.stringify({ "action": actionType }),
 				contentType:"application/json; charset=utf-8",
 				dataType:"json",
 				success: OnSuccessResult,
@@ -80,17 +129,32 @@
 				var _data = data;
 				var _chartLabels = data[0];
 				var _chartData = _data[1];
+				var _chartName="";
+				var _label="";
 
-				new Chart("myChart",
-				{
-					type:chartType,
-					data:{
-						labels: _chartLabels,
-						datasets: [{
-							data: _chartData
-						}]
-					}
-				});
+				if(actionType=="temperature"){
+					_chartName="temperatureChart";
+					_label = "temperature(°C)"
+				}
+				else if (actionType == "light"){
+					_chartName = "lightChart";
+					_label="light intensity(%)";
+				}
+				else if (actionType == "door") {
+					_chartName = "doorChart";
+					_label="door status"
+				}
+				new Chart(_chartName,
+					{
+						type: chartType,
+						data: {
+							labels: _chartLabels,
+							datasets: [{
+								label: _label,
+								data: _chartData
+							}]
+						}
+					});
 			}
 			function OnError(err) {
 
