@@ -93,12 +93,31 @@ namespace HomematicApp.DataAccess.Repositories
 
             return result;
         }
-        public async Task<bool> modifyParameters(Parameter parameters)
-        {
-            parameters.Row_Id = 1;
-            _context.Parameters.Update(parameters);
+        public async Task<bool> modifyParameters(Parameter parameters, string email)
+		{
+			var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (dbUser != null)
+            {
+                var actions = await _context.Actions.ToListAsync();
+                Action temp = new Action(dbUser.Device_Id, ActionType.temperature, parameters.Temperature, DateTime.Now);            
+                Action light = new Action( dbUser.Device_Id, ActionType.light, parameters.Light_Intensity, DateTime.Now);              
+                Action door = new Action( dbUser.Device_Id, ActionType.door, parameters.Opened_Door ? 1 : 0, DateTime.Now);
+				_context.Actions.Add(temp);
+				_context.Actions.Add(light);
+				_context.Actions.Add(door);
+            }
+            else return false;
+		    parameters.Row_Id = 1;
+		    _context.Parameters.Update(parameters);
 
-            return await _context.SaveChangesAsync() == 1;
+			return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<List<Action>> getTemperature(string email)
+        {
+			var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+			if (dbUser == null) return null;
+			return await _context.Actions.Where(a => a.Device_Id == dbUser.Device_Id && a.Action_Type==ActionType.temperature && a.Date_Time.Date==DateTime.Parse("2023-05-23").Date).ToListAsync();
+		}
     }
 }

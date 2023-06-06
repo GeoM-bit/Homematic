@@ -18,7 +18,7 @@ builder.Services.AddMvc();
 builder.Services.AddControllers();
 builder.Services.AddOptions();
 builder.Services.AddDbContext<HomematicContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("HomematicConnectionString"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("HomematicConnectionString"))));
+    options.UseMySql(builder.Configuration.GetConnectionString("Local"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("HomematicConnectionString")))); 
 
 builder.Services.Configure<SenderOptions>(options => builder.Configuration.GetSection("SenderOptions").Bind(options));
 builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();

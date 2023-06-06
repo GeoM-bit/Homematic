@@ -4,6 +4,7 @@ using HomematicApp.Domain.Abstractions;
 using HomematicApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace HomematicApp.Controllers
 {
@@ -12,6 +13,7 @@ namespace HomematicApp.Controllers
     {
         private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
+
         public UserController(IUserRepository _userRepository, IMapper _mapper)
         {
             userRepository = _userRepository;
@@ -22,7 +24,7 @@ namespace HomematicApp.Controllers
             var email = HttpContext.User.Identity.Name;
             var list = await userRepository.getActions(email);
             var actions = mapper.Map<List<ActionModel>>(list);
-
+           
             return View(new ActionListModel { Actions = actions});
         }
 
@@ -51,10 +53,23 @@ namespace HomematicApp.Controllers
         public async Task<IActionResult> ModifyParameters(ParameterModel parametersModel)
         {
             Parameter parameters = mapper.Map<Parameter>(parametersModel);
-            var result = await userRepository.modifyParameters(parameters);
+            await userRepository.modifyParameters(parameters,HttpContext.User.Identity.Name);
 
             return RedirectToAction("ViewParameters");
-
         }
-    }
+
+        [HttpPost]
+        public async Task<List<object>> GetTemperature()
+        {
+			var email = HttpContext.User.Identity.Name;
+            var result = await userRepository.getTemperature(email);
+			List<string> labels = (List<string>)result.OrderBy(a=>a.Date_Time).Select(x => x.Date_Time.ToString("HH:mm")).ToList();
+            List<float> temperatures = (List<float>)result.Select(x => x.Value_Action).ToList();
+            List<object> data = new();
+            data.Add(labels);   
+            data.Add(temperatures);
+
+            return data;
+		}
+	}
 }

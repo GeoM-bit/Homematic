@@ -9,6 +9,7 @@ namespace HomematicApp.ViewModels
 		public DateTime End_Date { get; set; }
 		public List<Options>? Light_Options { get; set; }
 		public List<Options>? Temperature_Options { get; set; }
+		public string Option_Code { get; set; }
 		public Options? Light {  get; set; }
 		public Options? Temperature { get; set; }
 

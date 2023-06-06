@@ -8,8 +8,10 @@ namespace HomematicApp.Domain.Abstractions
 	{
         Task<List<Action>> getActions(string email);
         Task<Parameter> getParameters();
-        Task<bool> modifyParameters(Parameter parameter);
+        Task<bool> modifyParameters(Parameter parameter, string email);
         Task<List<PresetModelDTO>> getPresetList(string email);
         PresetModelDTO decodePreset(Preset preset);
+		Task<List<Action>> getTemperature(string email);
+
 	}
 }

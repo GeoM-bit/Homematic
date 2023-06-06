@@ -14,5 +14,12 @@ namespace HomematicApp.Context.Context
         public DbSet<Action> Actions { get; set; }
         public DbSet<Parameter> Parameters { get; set; }
         public DbSet<Preset> Presets { get; set; }
-    }
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<Action>()
+				.Property(e => e.Action_Type)
+				.HasConversion<string>();
+		}
+	}
 }
