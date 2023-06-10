@@ -78,7 +78,7 @@ namespace HomematicApp.DataAccess.Repositories
             var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginUser.Email);
             if (dbUser != null)
             {
-                if (dbUser.Device_Id.Length==16)
+                if (dbUser.Device_Id.Length==15)
                 {
                     if (_hashService.VerifyPassword(loginUser.Password, dbUser.Passwrd))
                     {

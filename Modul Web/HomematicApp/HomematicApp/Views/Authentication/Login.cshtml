@@ -18,7 +18,7 @@
                 @if (ViewBag.LoginFailed == true)
                 {
                     <div class="alert alert-danger" role="alert">
-                        <span class="closebtn" onclick="this.parentElement.style.display='none'">×</span>
+                        <span class="closebtn" id="loginFailure" onclick="this.parentElement.style.display='none'">×</span>
                         @ViewData["failure-message"]
                     </div>
                 }
@@ -32,19 +32,19 @@
             </div>
         <form class="user" method="post" asp-action="LoginUser">
             <div style="max-width:350px">
-            <input type="email" class="form-control form-control-user" asp-for="Email"
+            <input type="email" data-testid="LoginEmail" class="form-control form-control-user" asp-for="Email"
                    placeholder=@ViewData["email-placeholder"]>
-            <span asp-validation-for="Email" class="text-danger"></span>
+            <span id="validationEmail" asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="spacing"></div>
             <div style="max-width:350px">
-                <input type="password" class="form-control form-control-user" asp-for="Password"
+                <input type="password" id="LoginPassword" class="form-control form-control-user" asp-for="Password"
                    placeholder=@ViewData["password-placeholder"]>
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
         <div style="float:right"><a asp-controller="Authentication" asp-action="ForgotPassword">Forgot your password?</a>
         </div>
-                <button type="submit" class="btn btn-primary btn-user btn-block" style="margin-top:7%">
+                <button type="submit" id="submitLogin" class="btn btn-primary btn-user btn-block" style="margin-top:7%">
         @ViewData["login-button"]
     </button>
 </form>

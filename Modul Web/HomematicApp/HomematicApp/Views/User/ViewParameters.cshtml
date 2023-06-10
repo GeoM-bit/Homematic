@@ -26,9 +26,9 @@
 				</thead>
 				<tbody>
 						<tr>
-							<td class="text-center">@Model.Temperature°C</td>
-							<td class ="text-center">@Model.Light_Intensity%</td>
-							<td class="text-center">@(@Model.Opened_Door==true?"opened" : "closed")</td>
+							<td class="text-center" id="temperatureCell">@Model.Temperature°C</td>
+							<td class ="text-center" id="lightCell">@Model.Light_Intensity%</td>
+							<td class="text-center" id="doorCell">@(@Model.Opened_Door == true ? "opened" : "closed")</td>
 							<td></td>
 						</tr>
 					<tr>
@@ -39,14 +39,14 @@
 						</td>
 						<td class="text-center">
 							<div style="margin-top:3%">
-								<input id="mine" type="range" min="0" max="100" value=@Model.Light_Intensity class="slider" id="light" oninput="this.nextElementSibling.value = this.value" asp-for="Light_Intensity" onChange="change()">
+								<input type="range" min="0" max="100" value=@Model.Light_Intensity class="slider" id="light" oninput="this.nextElementSibling.value = this.value" asp-for="Light_Intensity" onChange="change()">
 								<span id="result"></span>%
 							</div>
 						</td>
 						<td class="text-center">
 							<div style="display:inline-grid">
-									<div>Close: <input type="radio" value=false asp-for="Opened_Door"></div>
-									<div>Open: <input type="radio" value=true asp-for="Opened_Door"></div>
+									<div>Close: <input type="radio" value=false id="open" asp-for="Opened_Door"></div>
+									<div>Open: <input type="radio" value=true id="close" asp-for="Opened_Door"></div>
 							</div>
 						</td>
 						<td>						
@@ -55,7 +55,7 @@
 					</tr>				
 				</tbody>
 			</table>
-			<button type="submit" class="btn btn-primary btn-user btn-block" style="float:right;margin-right:5%">
+			<button type="submit" class="btn btn-primary btn-user btn-block" id="submit" style="float:right;margin-right:5%">
 				Submit
 			</button>
 			</form>
@@ -65,7 +65,7 @@
 
 <script>
 	var result = document.getElementById("result");
-	var mine = document.getElementById("mine");
+	var mine = document.getElementById("light");
 	function change() {
 		result.innerText = mine.value;
 	}

@@ -38,7 +38,7 @@
      <div class="form-group row spacing justify-content-center align-items-center">
         <div class="col-sm-12 mb-3 mb-sm-0">
             <label asp-for="First_Name">@ViewData["firstname-placeholder"]<span class="text-danger">*</span></label>
-            <input type="text" class="form-control form-control-user" asp-for="First_Name"
+            <input type="text" id="firstName" class="form-control form-control-user" asp-for="First_Name"
                                placeholder=@ViewData["firstname-placeholder"]>
             @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
             {
@@ -49,7 +49,7 @@
     <div class="form-group row spacing justify-content-center align-items-center">
                     <div class="col-sm-12">
             <label asp-for="Last_Name">@ViewData["lastname-placeholder"]<span class="text-danger">*</span></label>
-            <input type="text" class="form-control form-control-user" asp-for="Last_Name"
+            <input type="text" id="lastName" class="form-control form-control-user" asp-for="Last_Name"
                    placeholder=@ViewData["lastname-placeholder"]>
             @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
             {
@@ -60,7 +60,7 @@
     <div class="form-group row spacing justify-content-center align-items-center">
                     <div class="col-sm-12 mb-3 mb-sm-0">
         <label asp-for="Email">@ViewData["email-placeholder"]<span class="text-danger">*</span></label>
-        <input type="email" class="form-control form-control-user" asp-for="Email"
+        <input type="email" id="email" class="form-control form-control-user" asp-for="Email"
                placeholder=@ViewData["email-placeholder"]>
         @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
         {
@@ -71,11 +71,11 @@
         <div class="form-group row spacing justify-content-center align-items-center">
                     <div class="col-sm-12 mb-3 mb-sm-0">
                         <label asp-for="Passwrd">@ViewData["password-placeholder"]<span class="text-danger">*</span></label>
-                        <input type="password" class="form-control form-control-user"
+                        <input type="password" id="password" class="form-control form-control-user"
                                asp-for="Passwrd" placeholder=@ViewData["password-placeholder"]>
                         @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
                         {
-                            <span asp-validation-for="Passwrd" class="text-danger"></span>
+                            <span asp-validation-for="Passwrd" id="passwordError" class="text-danger"></span>
                         }
                     </div>
     </div>
@@ -84,14 +84,14 @@
             <label asp-for="CNP">@ViewData["cnp-placeholder"]<span class="text-danger">*</span></label>
             <input type="text" class="form-control form-control-user"
                    asp-for="CNP" placeholder=@ViewData["cnp-placeholder"]>
-            <input type="text" hidden value="@ViewBag.InitialID" asp-for="Device_Id"  />
+            <input type="text" hidden id="CNP" value="@ViewBag.InitialID" asp-for="Device_Id"  />
             @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
             {
-                 <span asp-validation-for="CNP" class="text-danger"></span>
+                 <span asp-validation-for="CNP" id="CNPError" class="text-danger"></span>
             }
         </div>
     </div>
-    <button type="submit" class="btn btn-primary btn-user btn-block" style="float:right">
+    <button type="submit" id="submit" class="btn btn-primary btn-user btn-block" style="float:right">
         @ViewData["register-button"]
     </button>
 </form>
