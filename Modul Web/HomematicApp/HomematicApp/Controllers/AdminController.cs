@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using HomematicApp.Domain.Abstractions;
 using HomematicApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace HomematicApp.Controllers
 {
+    [Authorize(Roles ="ADMIN")]
     public class AdminController : Controller
     {
         private readonly IAdminRepository adminRepository;
@@ -29,7 +30,7 @@ namespace HomematicApp.Controllers
         }
 
 		[HttpPost]
-		public async Task<IActionResult> DeleteUser([FromBody] DeleteModel deleteModel) 
+		public async Task<IActionResult> DeleteUser(DeleteModel deleteModel) 
 		{
            var result=await adminRepository.DeleteUser(deleteModel.Email);
 			
@@ -37,9 +38,6 @@ namespace HomematicApp.Controllers
 			    return RedirectToAction("ViewUsers", new { DeleteSuccessful = true });
             else
 				return RedirectToAction("ViewUsers", new { DeleteSuccessful = false });
-
 		}
-
-
 	}
 }

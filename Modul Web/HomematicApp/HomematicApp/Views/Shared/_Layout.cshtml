@@ -12,37 +12,44 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Authentication" asp-action="Register">HomematicApp</a>
+                <a class="navbar-brand"><img height="40px" width="65px" src="~/img/logo.png" />   HomematicApp</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1"> 
-                        @if (!User.Identity.IsAuthenticated)
+                        @if (!User.Identity.IsAuthenticated && (ViewContext.RouteData.Values["Action"]?.ToString() == "ForgotPassword" || ViewContext.RouteData.Values["Action"]?.ToString() == "ResetPassword"))
                         {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Register">Register</a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Login">Login</a>
                         </li>
-                        }
-                        else
-                        {
-                         @if (User.IsInRole("USER"))
-                         {
-                            
-                         }
-                         else if (User.IsInRole("ADMIN"))
-                         {
-                                
-                         }
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Logout">Logout</a>
-                         </li>
-                        }
+                        }                      
                     </ul>
+                     @if (User.Identity.IsAuthenticated)
+                    {
+                        <ul class="navbar-nav">                            
+                        <li>                          
+                            <div class="my-dropdown">                                     
+                                <button class="my-dropbtn">
+                                    <a class="nav-link text-dark"> <img height="20px" width="20px" src="~/img/user.png" />  Hello, @User.Identity.Name!</a>
+                                </button>
+                                <div class="my-dropdown-content">
+                                            @if (User.IsInRole("ADMIN"))
+                                            {
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Register">Register Users</a>
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ViewUsers">View Users</a>
+
+                                            }
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewActions">Actions & ESP</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewParameters">Parameters</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewPresets">Presets</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Logout">Logout</a>                                   
+                                </div>
+                            </div>                         
+                          </li>
+                        </ul>
+                    }
                 </div>
             </div>
         </nav>
@@ -54,7 +61,7 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
+        <div class="container" style="text-align:center">
             &copy; 2023 - HomematicApp
         </div>
     </footer>

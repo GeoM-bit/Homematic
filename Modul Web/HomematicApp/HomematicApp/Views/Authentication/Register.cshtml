@@ -9,60 +9,93 @@
     ViewData["cnp-placeholder"] = "Enter CNP";
     ViewData["device-placeholder"] = "Enter IMEI code";
     ViewData["register-button"] = "Register";
-    ViewData["rejection-message"] = "Your account could not be created!";
+    ViewData["rejection-message"] = "The account could not be created!";
+    ViewData["success-message"] = "The account was successfully created!";
 }
 
-<h2>Register your account</h2>
-
-<form class="user" method="post" asp-action="RegisterUser">
+<h2 style="text-align:center">Register users</h2>
+<div class="container d-flex justify-content-center align-items-center">
+<div class="card shadow mb-4">
+<div class="card-body">
+<form class="user" method="post" asp-action="Register">
     <div class="form-group row">
-        @if (@ViewBag.RegisterFailed == true)
+        @if (@ViewBag.RegisterSuccess == false)
         {
             <div class="alert alert-danger" role="alert">
                 <span class="closebtn" onclick="this.parentElement.style.display='none'">×</span>
                 @ViewData["rejection-message"]
             </div>
         }
+        else if (ViewBag.RegisterSuccess == true)
+        {
+            <div class="alert alert-success" role="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none'">×</span>
+                @ViewData["success-message"]
+            </div>
+        }
     </div>
-        
-    <div class="form-group row spacing">
-        <div class="col-sm-6 mb-3 mb-sm-0">
+
+     <div class="form-group row spacing justify-content-center align-items-center">
+        <div class="col-sm-12 mb-3 mb-sm-0">
+            <label asp-for="First_Name">@ViewData["firstname-placeholder"]<span class="text-danger">*</span></label>
             <input type="text" class="form-control form-control-user" asp-for="First_Name"
-                   placeholder=@ViewData["firstname-placeholder"]>
-            <span asp-validation-for="First_Name" class="text-danger"></span>
+                               placeholder=@ViewData["firstname-placeholder"]>
+            @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
+            {
+                <span asp-validation-for="First_Name" class="text-danger"></span>
+            }
         </div>
-        <div class="col-sm-6">
+    </div>
+    <div class="form-group row spacing justify-content-center align-items-center">
+                    <div class="col-sm-12">
+            <label asp-for="Last_Name">@ViewData["lastname-placeholder"]<span class="text-danger">*</span></label>
             <input type="text" class="form-control form-control-user" asp-for="Last_Name"
                    placeholder=@ViewData["lastname-placeholder"]>
-            <span asp-validation-for="Last_Name" class="text-danger"></span>
+            @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
+            {
+                   <span asp-validation-for="Last_Name" class="text-danger"></span>
+            }
         </div>
     </div>
-    <div class="form-group row spacing">
-        <div class="col-sm-6 mb-3 mb-sm-0">
+    <div class="form-group row spacing justify-content-center align-items-center">
+                    <div class="col-sm-12 mb-3 mb-sm-0">
+        <label asp-for="Email">@ViewData["email-placeholder"]<span class="text-danger">*</span></label>
         <input type="email" class="form-control form-control-user" asp-for="Email"
                placeholder=@ViewData["email-placeholder"]>
-        <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-        <div class="col-sm-6">
-            <input type="text" class="form-control form-control-user"
-                   asp-for="Device_Id" placeholder=@ViewData["device-placeholder"]>
-            <span asp-validation-for="Device_Id" class="text-danger"></span>
+        @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
+        {
+              <span asp-validation-for="Email" class="text-danger"></span>
+        }
         </div>
     </div>
-    <div class="form-group row spacing">
-        <div class="col-sm-6 mb-3 mb-sm-0">
-            <input type="password" class="form-control form-control-user"
-                   asp-for="Password" placeholder=@ViewData["password-placeholder"]>
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-        <div class="col-sm-6">
+        <div class="form-group row spacing justify-content-center align-items-center">
+                    <div class="col-sm-12 mb-3 mb-sm-0">
+                        <label asp-for="Passwrd">@ViewData["password-placeholder"]<span class="text-danger">*</span></label>
+                        <input type="password" class="form-control form-control-user"
+                               asp-for="Passwrd" placeholder=@ViewData["password-placeholder"]>
+                        @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <span asp-validation-for="Passwrd" class="text-danger"></span>
+                        }
+                    </div>
+    </div>
+    <div class="form-group row spacing justify-content-center align-items-center">
+                    <div class="col-sm-12">
+            <label asp-for="CNP">@ViewData["cnp-placeholder"]<span class="text-danger">*</span></label>
             <input type="text" class="form-control form-control-user"
                    asp-for="CNP" placeholder=@ViewData["cnp-placeholder"]>
-            <span asp-validation-for="CNP" class="text-danger"></span>
+            <input type="text" hidden value="@ViewBag.InitialID" asp-for="Device_Id"  />
+            @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
+            {
+                 <span asp-validation-for="CNP" class="text-danger"></span>
+            }
         </div>
     </div>
-    <button type="submit" class="btn btn-primary btn-user btn-block">
+    <button type="submit" class="btn btn-primary btn-user btn-block" style="float:right">
         @ViewData["register-button"]
     </button>
 </form>
+</div>
+</div>
+</div>
 

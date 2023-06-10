@@ -18,7 +18,7 @@ builder.Services.AddMvc();
 builder.Services.AddControllers();
 builder.Services.AddOptions();
 builder.Services.AddDbContext<HomematicContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("HomematicConnectionString"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("HomematicConnectionString"))));
+    options.UseMySql(builder.Configuration.GetConnectionString("HomematicConnectionString"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("HomematicConnectionString")))); 
 
 builder.Services.Configure<SenderOptions>(options => builder.Configuration.GetSection("SenderOptions").Bind(options));
 builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
@@ -84,6 +84,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Authentication}/{action=Register}/{id?}");
+    pattern: "{controller=Authentication}/{action=Login}/{id?}");
 
 app.Run();

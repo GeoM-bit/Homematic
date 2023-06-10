@@ -1,4 +1,5 @@
 ﻿using HomematicApp.Domain.Abstractions;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.Extensions.Configuration;
 using System.Globalization;
 using System.Security.Cryptography;
@@ -10,14 +11,14 @@ namespace HomematicApp.Service.Services
         HashAlgorithmName hashAlgorithm;
         private readonly IConfiguration _configuration;
         byte[] salt;
-        int keySize;
+        int bytesRequested;
         int iterations;
 
         public HashService(IConfiguration configuration)
         {
             _configuration = configuration;
             hashAlgorithm = HashAlgorithmName.SHA512;
-            keySize = int.Parse(_configuration["HashOptions:KeySize"]);
+            bytesRequested = int.Parse(_configuration["HashOptions:BytesRequested"]);
             iterations = int.Parse(_configuration["HashOptions:Iterations"]);
             salt = _configuration["HashOptions:Salt"].Split("-")
                    .Select(t => byte.Parse(t, NumberStyles.AllowHexSpecifier))
@@ -27,20 +28,25 @@ namespace HomematicApp.Service.Services
 
         public string HashPassword(string password)
         {
-            var hash = Rfc2898DeriveBytes.Pbkdf2(
-                    password,
-                    salt,
-                    iterations,
-                    hashAlgorithm,
-                    keySize);
-
-            return Convert.ToHexString(hash);       
+            string hash = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                                                password: password!,
+                                                salt: salt,
+                                                prf: KeyDerivationPrf.HMACSHA512,
+                                                iterationCount: iterations,
+                                                numBytesRequested: bytesRequested));
+            return hash;       
         }
 
         public bool VerifyPassword(string password, string passwordHash)
         {
-            var hashToCompare = Rfc2898DeriveBytes.Pbkdf2(password, salt, iterations, hashAlgorithm, keySize);
-            return hashToCompare.SequenceEqual(Convert.FromHexString(passwordHash));
+            var hashToCompare = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                                                password: password!,
+                                                salt: salt,
+                                                prf: KeyDerivationPrf.HMACSHA512,
+                                                iterationCount: iterations,
+                                                numBytesRequested: bytesRequested));
+
+            return hashToCompare.Equals(passwordHash);
         }
     }
 }
