@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using HomematicApp.Domain.Abstractions;
 using HomematicApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomematicApp.Controllers
 {
+    [Authorize(Roles ="ADMIN")]
     public class AdminController : Controller
     {
         private readonly IAdminRepository adminRepository;

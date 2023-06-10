@@ -14,6 +14,7 @@ namespace HomematicApp.Context.Context
         public DbSet<Action> Actions { get; set; }
         public DbSet<Parameter> Parameters { get; set; }
         public DbSet<Preset> Presets { get; set; }
+        public DbSet<EspData> Temperature_ESP { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

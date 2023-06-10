@@ -7,7 +7,8 @@ namespace HomematicApp.Context.DbModels
 		[Key]
 		public int Row_Id { get; set; }
 		public float Temperature { get; set; }
-		public float Light_Intensity { get; set; }
+		public int Light_Intensity { get; set; }
 		public bool Opened_Door { get; set; }
+		public string Current_Preset { get; set; }
 	}
 }

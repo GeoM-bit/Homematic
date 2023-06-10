@@ -34,9 +34,10 @@
             </div>
         }
     </div>
-        
-    <div class="form-group row spacing">
-        <div class="col-sm-6 mb-3 mb-sm-0">
+
+     <div class="form-group row spacing justify-content-center align-items-center">
+        <div class="col-sm-12 mb-3 mb-sm-0">
+            <label asp-for="First_Name">@ViewData["firstname-placeholder"]<span class="text-danger">*</span></label>
             <input type="text" class="form-control form-control-user" asp-for="First_Name"
                                placeholder=@ViewData["firstname-placeholder"]>
             @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
@@ -44,7 +45,10 @@
                 <span asp-validation-for="First_Name" class="text-danger"></span>
             }
         </div>
-        <div class="col-sm-6">
+    </div>
+    <div class="form-group row spacing justify-content-center align-items-center">
+                    <div class="col-sm-12">
+            <label asp-for="Last_Name">@ViewData["lastname-placeholder"]<span class="text-danger">*</span></label>
             <input type="text" class="form-control form-control-user" asp-for="Last_Name"
                    placeholder=@ViewData["lastname-placeholder"]>
             @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
@@ -53,8 +57,9 @@
             }
         </div>
     </div>
-    <div class="form-group row spacing">
-        <div class="col-sm-6 mb-3 mb-sm-0">
+    <div class="form-group row spacing justify-content-center align-items-center">
+                    <div class="col-sm-12 mb-3 mb-sm-0">
+        <label asp-for="Email">@ViewData["email-placeholder"]<span class="text-danger">*</span></label>
         <input type="email" class="form-control form-control-user" asp-for="Email"
                placeholder=@ViewData["email-placeholder"]>
         @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
@@ -62,27 +67,24 @@
               <span asp-validation-for="Email" class="text-danger"></span>
         }
         </div>
-        <div class="col-sm-6">
-            <input type="text" class="form-control form-control-user"
-                   asp-for="Device_Id" placeholder=@ViewData["device-placeholder"]>
-        @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
-        {
-            <span asp-validation-for="Device_Id" class="text-danger"></span>
-        }
-        </div>
     </div>
-    <div class="form-group row spacing">
-        <div class="col-sm-6 mb-3 mb-sm-0">
-            <input type="password" class="form-control form-control-user"
-                   asp-for="Password" placeholder=@ViewData["password-placeholder"]>
-            @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
-            {
-                <span asp-validation-for="Password" class="text-danger"></span>
-            }
-        </div>
-        <div class="col-sm-6">
+        <div class="form-group row spacing justify-content-center align-items-center">
+                    <div class="col-sm-12 mb-3 mb-sm-0">
+                        <label asp-for="Passwrd">@ViewData["password-placeholder"]<span class="text-danger">*</span></label>
+                        <input type="password" class="form-control form-control-user"
+                               asp-for="Passwrd" placeholder=@ViewData["password-placeholder"]>
+                        @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <span asp-validation-for="Passwrd" class="text-danger"></span>
+                        }
+                    </div>
+    </div>
+    <div class="form-group row spacing justify-content-center align-items-center">
+                    <div class="col-sm-12">
+            <label asp-for="CNP">@ViewData["cnp-placeholder"]<span class="text-danger">*</span></label>
             <input type="text" class="form-control form-control-user"
                    asp-for="CNP" placeholder=@ViewData["cnp-placeholder"]>
+            <input type="text" hidden value="@ViewBag.InitialID" asp-for="Device_Id"  />
             @if (ViewContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
             {
                  <span asp-validation-for="CNP" class="text-danger"></span>

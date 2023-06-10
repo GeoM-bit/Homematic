@@ -2,5 +2,6 @@
 {
 	temperature=1,
 	light,
-	door
+	door,
+	esp_temperature
 }

@@ -1,17 +1,10 @@
-﻿using HomematicApp.Domain.Common;
-
-namespace HomematicApp.ViewModels
+﻿namespace HomematicApp.ViewModels
 {
 	public class PresetModel
 	{
-		public string? Preset_Name { get; set; }
-		public DateTime Start_Date { get; set; }
-		public DateTime End_Date { get; set; }
-		public List<Options>? Light_Options { get; set; }
-		public List<Options>? Temperature_Options { get; set; }
-		public string Option_Code { get; set; }
-		public Options? Light {  get; set; }
-		public Options? Temperature { get; set; }
+		public string Preset_Name { get; set; }
+		public float Light { get; set; }
+		public float Temperature { get; set; }
 
 	}
 }

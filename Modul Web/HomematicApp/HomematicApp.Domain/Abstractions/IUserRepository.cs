@@ -10,8 +10,10 @@ namespace HomematicApp.Domain.Abstractions
         Task<Parameter> getParameters();
         Task<bool> modifyParameters(Parameter parameter, string email);
         Task<List<PresetModelDTO>> getPresetList(string email);
-        PresetModelDTO decodePreset(Preset preset);
 		Task<List<object>> getChartData(string email, ActionType dataType);
-
+        Task<bool> createPreset(PresetModelDTO preset, string email);
+        Task<string> getCurrentPreset();
+        Task<PresetModelDTO?> setPreset(string presetName, string email);
+        Task<List<EspData>> getEspData();
 	}
 }

@@ -10,8 +10,6 @@ namespace HomematicApp.Context.DbModels
         public string Preset_Name { get; set; }
         [ForeignKey("Device_Id")]
         public string? Device_Id { get; set; }
-        public string Option_Code { get; set; }
-        public DateTime Start_Date { get; set; }
-        public DateTime End_Date { get; set; }
+        public string? Option_Code { get; set; }
     }
 }

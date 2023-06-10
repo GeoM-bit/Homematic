@@ -13,7 +13,7 @@ namespace HomematicApp.ViewModels
         [Required(ErrorMessage = "Email is required!")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Password is required!")]
-        public string? Password { get; set; }
+        public string? Passwrd { get; set; }
         [Required(ErrorMessage = "CNP is required!")]
         public string CNP { get; set; }
     }

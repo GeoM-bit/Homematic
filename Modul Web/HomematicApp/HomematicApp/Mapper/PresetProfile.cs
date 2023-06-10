@@ -9,6 +9,7 @@ namespace HomematicApp.Mapper
 		public PresetProfile()
 		{
 			CreateMap<PresetModelDTO, PresetModel>();
+			CreateMap<PresetModel, PresetModelDTO>();
 		}
 	}
 }

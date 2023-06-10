@@ -1,13 +1,16 @@
 ﻿@model HomematicApp.ViewModels.ActionListModel
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
 
 @{
     ViewData["Title"] = "View Actions";
 	ViewData["action-type"] = "Action Type";
 	ViewData["value"] = "Value";
-	ViewData["date-time"] = "Date";
+	ViewData["date-time"] = "Date and Time";
 }
  
-<h1>View Actions</h1>
+<h1>Actions</h1>
 
 <div class="card shadow mb-4">
 	<div class="card-body">
@@ -31,6 +34,43 @@
 					}
 				</tbody>
 			</table>
+			<div style="float:right">
+			@Html.PagedListPager(Model.Actions, page => Url.Action("ViewActions", new { actionPage = page }), new PagedListRenderOptions {
+			LiElementClasses = new string[] { "page-item" },
+			PageClasses = new string[] { "page-link" }
+			})
+			</div>
+		</div>
+	</div>
+</div>
+
+<h1>ESP Temperature</h1>
+<div class="card shadow mb-4">
+	<div class="card-body">
+		<div class="table-responsive">
+			<table class="table table-bordered" id="espTable" width="100%" cellspacing="0">
+				<thead>
+					<tr>
+						<th class="text-center">@ViewData["value"]</th>
+						<th class="text-center">@ViewData["date-time"]</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model.EspData)
+					{
+						<tr>
+							<td class="text-center">@item.Temperature_ESP</td>
+							<td class="text-center">@item.Timestamp_Value</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+			<div style="float:right">
+				@Html.PagedListPager(Model.EspData, page => Url.Action("ViewActions", new { espPage = page }), new PagedListRenderOptions {
+				LiElementClasses = new string[] { "page-item" },
+				PageClasses = new string[] { "page-link" }
+				})
+			</div>
 		</div>
 	</div>
 </div>
@@ -38,58 +78,54 @@
 <h1 style="margin-top:5%; margin-bottom:2%">View Charts</h1>
 
 <div class="row" style="margin-bottom:2%">
-	<div class="col-1">
-		<label><b>Chart-Type</b></label>
-		</div>
 	<div class="col-2">
 		<select id="ChartType" class="form-control" style="width:200px">
 			<option selected>--Select Chart Type--</option>
 			<option>bar</option>
 			<option>line</option>
-			<option>pie</option>
-			<option>doughnut</option>
 		</select>
 	</div>
 	<div class="col-2">
 		<select id="DataType" class="form-control" style="width:200px">
 			<option selected>--Select Data Type--</option>
 			<option>temperature</option>
+			<option>esp_temperature</option>
 			<option>light</option>
 			<option>door</option>
 		</select>
 	</div>
 	<div class="col-4">
-		<input id="ID" value="Show Graph" type="button" />
+		<input id="ID" value="Show Graph" type="button" class="btn btn-primary btn-user btn-block"/>
 	</div>
 
 </div>
 <div class="table-responsive">
-	<table class="table" width="100%" celspacing="1">
-<tr>
-	<td style="min-width:400px; max-width:450px">
-<div id="TemperatureView">
-	<canvas id="temperatureChart"></canvas>
-</div>
+<table class="table" width="100%" celspacing="1">
+	<tr>
+		<td style="min-width:400px; max-width:450px">
+			<div id="TemperatureView">
+				<canvas id="temperatureChart"></canvas>
+			</div>
 		</td>
 			<td style="min-width:400px; max-width:450px">
 				<div id="ESPView">
 					<canvas id="espChart"></canvas>
 				</div>
 			</td>
-		</tr>
-		<tr style="border:hidden">
-			<td style="min-width:400px; max-width:450px">
-				<div id="LightView">
-					<canvas id="lightChart"></canvas>
-				</div>
-			</td>
-			<td style="min-width:400px; max-width:450px">
-				<div id="DoorView">
-					<canvas id="doorChart"></canvas>
-				</div>
-			</td>
-</tr>
-	</table>
+	</tr>
+	<tr style="border:hidden">
+		<td style="min-width:400px; max-width:450px">
+			<div id="LightView">
+				<canvas id="lightChart"></canvas>
+			</div>
+		</td>
+		<td style="min-width:400px; max-width:450px">
+			<div id="DoorView">
+				<canvas id="doorChart"></canvas>
+			</div>
+		</td>
+	</tr>
+</table>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -100,6 +136,7 @@
 			var actionType=$("#DataType").val();
 			var chartType=$("#ChartType").val();
 			var temperatureView = document.getElementById('TemperatureView');
+			var espView = document.getElementById('ESPView');
 			var lightView = document.getElementById('LightView');
 			var doorView = document.getElementById('DoorView');
 
@@ -114,6 +151,10 @@
 			else if (actionType == "door") {
 				doorView.innerHTML = '&nbsp;';
 				$('#DoorView').append('<canvas id="doorChart" style="max-width:450px;max-height:400px"></canvas>');
+			}
+			else if (actionType == "esp_temperature") {
+				espView.innerHTML = '&nbsp;';
+				$('#ESPView').append('<canvas id="espChart" style="max-width:450px;max-height:400px"></canvas>');
 			}
 			
 			$.ajax({
@@ -143,6 +184,10 @@
 				else if (actionType == "door") {
 					_chartName = "doorChart";
 					_label="door status"
+				}
+				else if (actionType == "esp_temperature") {
+					_chartName = "espChart";
+					_label = "ESP temperature"
 				}
 				new Chart(_chartName,
 					{

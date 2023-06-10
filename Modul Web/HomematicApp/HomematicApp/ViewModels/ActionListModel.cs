@@ -1,7 +1,10 @@
-﻿namespace HomematicApp.ViewModels
+﻿using X.PagedList;
+
+namespace HomematicApp.ViewModels
 {
 	public class ActionListModel
 	{
-		public List<ActionModel> Actions { get; set; }	
+		public IPagedList<ActionModel> Actions { get; set; }
+		public IPagedList<EspDataModel> EspData { get; set; }
 	}
 }

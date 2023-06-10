@@ -10,10 +10,12 @@ using System.Web;
 namespace HomematicApp.Controllers
 {
     public class AuthenticationController : Controller
-    {
-        
+    {      
         private readonly IAuthenticationRepository authenticationRepository;
         private readonly IMapper mapper;
+        private Random random = new Random();
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
         public AuthenticationController(IAuthenticationRepository _authenticationRepository, IMapper _mapper)
         {
             authenticationRepository = _authenticationRepository;
@@ -27,12 +29,8 @@ namespace HomematicApp.Controllers
             if (!string.IsNullOrEmpty(RegisterSuccess))
             {
                 ViewBag.RegisterSuccess = bool.Parse(RegisterSuccess);
-            }
-            if (!string.IsNullOrEmpty(RegisterSuccess))
-            {
-                ViewBag.RegisterFailed = bool.Parse(RegisterSuccess);
-            }
-
+            }        
+            
             if (ModelState.IsValid)
             {
                 User user = mapper.Map<User>(userModel);
@@ -48,6 +46,9 @@ namespace HomematicApp.Controllers
             }
             else
             {
+                var initialId= new string(Enumerable.Repeat(chars, 15)
+                    .Select(s => s[random.Next(s.Length)]).ToArray());
+                ViewBag.InitialID = initialId;
                 return View();
             }
         }
@@ -55,11 +56,17 @@ namespace HomematicApp.Controllers
         public IActionResult Login()
 		{
 			var LoginFailed = Request.Query["LoginFailed"].ToString();
-			if (!string.IsNullOrEmpty(LoginFailed))
+            var InvalidIMEI = Request.Query["InvalidIMEI"].ToString();
+
+            if (!string.IsNullOrEmpty(LoginFailed))
 			{
 				ViewBag.LoginFailed = bool.Parse(LoginFailed);
 			}
-			if (HttpContext.Session.GetString("Token") != null)
+            if (!string.IsNullOrEmpty(InvalidIMEI))
+            {
+                ViewBag.InvalidIMEI = bool.Parse(InvalidIMEI);
+            }
+            if (HttpContext.Session.GetString("Token") != null)
 			{
 				if (User.IsInRole(Roles.USER.ToString()))
 				{
@@ -80,17 +87,31 @@ namespace HomematicApp.Controllers
 
 		public async Task<IActionResult> LoginUser(LoginModel loginModel)
         {
-            LoginUser loginUser = mapper.Map<LoginUser>(loginModel);
-            string? result = await authenticationRepository.Login(loginUser);
-
-            if (result!=null)
+            if (ModelState.IsValid)
             {
-                HttpContext.Session.SetString("Token", result);
-                return RedirectToAction("Login");
+                LoginUser loginUser = mapper.Map<LoginUser>(loginModel);
+                string? result = await authenticationRepository.Login(loginUser);
+
+                if (result != null)
+                {
+                    if (result == "IMEI")
+                    {
+                        return RedirectToAction("Login", new { InvalidIMEI = true });
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("Token", result);
+                        return RedirectToAction("Login");
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Login", new { LoginFailed = true });
+                }
             }
             else
             {
-                return RedirectToAction("Login", new {LoginFailed = true});
+                return RedirectToAction("Login");
             }
         }
 

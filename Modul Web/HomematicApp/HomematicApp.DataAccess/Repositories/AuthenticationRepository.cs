@@ -76,37 +76,39 @@ namespace HomematicApp.DataAccess.Repositories
         public async Task<string?> Login(LoginUser loginUser)
         {
             var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginUser.Email);
-
             if (dbUser != null)
             {
-                if (_hashService.VerifyPassword(loginUser.Password, dbUser.Password))
+                if (dbUser.Device_Id.Length==16)
                 {
-                    string role = GetRole(loginUser.Email).Result;
-                    if (role == null) 
+                    if (_hashService.VerifyPassword(loginUser.Password, dbUser.Passwrd))
                     {
-                        return null;
+                        string role = GetRole(loginUser.Email).Result;
+                        if (role == null)
+                        {
+                            return null;
+                        }
+                        string generatedToken = _tokenService.BuildToken(_configuration["Jwt:Key"].ToString(), _configuration["Jwt:Issuer"].ToString(), loginUser.Email, role);
+                        if (generatedToken != null)
+                        {
+                            return generatedToken;
+                        }
+                        else
+                            return null;
                     }
-                    string generatedToken = _tokenService.BuildToken(_configuration["Jwt:Key"].ToString(), _configuration["Jwt:Issuer"].ToString(), loginUser.Email, role);
-                    if (generatedToken != null)
-                    {
-                        return generatedToken;
-                    }
-                    else
-                       return null;
                 }
-                return null;
+                return "IMEI";
             }
             return null;
         }
 
         public async Task<bool> Register(User user)
         {
-            var existentDbuser = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email || u.CNP==user.CNP || u.Device_Id==user.Device_Id);
-            if(existentDbuser != null)
+            var existentDbuser = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email || u.CNP == user.CNP || u.Device_Id == user.Device_Id);
+            if (existentDbuser != null)
             {
                 return false;
             }
-            user.Password = _hashService.HashPassword(user.Password);
+            user.Passwrd = _hashService.HashPassword(user.Passwrd);
             user.Is_Admin = false;
             _context.Users.Add(user);
             
@@ -121,7 +123,7 @@ namespace HomematicApp.DataAccess.Repositories
 
             if (dbUser != null)
             {
-                dbUser.Password = _hashService.HashPassword(newPassword);
+                dbUser.Passwrd = _hashService.HashPassword(newPassword);
                 _context.Users.Update(dbUser);
 
                 return await _context.SaveChangesAsync() == 1;
@@ -145,6 +147,6 @@ namespace HomematicApp.DataAccess.Repositories
             }
             else
                 return null;
-        }
+        }       
     }
 }
