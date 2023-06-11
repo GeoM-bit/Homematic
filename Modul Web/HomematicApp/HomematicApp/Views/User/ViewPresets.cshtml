@@ -84,7 +84,7 @@
                     </select>
                 </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-user btn-block" style="float:right;margin-top:2%">Apply preset</button>               
+                <button type="submit" id="applyPreset" class="btn btn-primary btn-user btn-block" style="float:right;margin-top:2%">Apply preset</button>               
             </form>
             </div>
         </div>
@@ -113,7 +113,7 @@
                         <span id="result"></span>
                     </div>
                 </div>             
-                <button type="submit" class="btn btn-primary btn-user btn-block" style="float:right;margin-top:2%">
+                <button type="submit" id="createPreset" class="btn btn-primary btn-user btn-block" style="float:right;margin-top:2%">
                     @ViewData["create-preset-button"]
                 </button>
             </form>
@@ -127,11 +127,4 @@
     function change() {
         result.innerText = mine.value;
     }
-    //function setSelectedValue() {
-    //    var dropdown = document.getElementById("dropdownList");
-    //    var selectedValue = dropdown.options[dropdown.selectedIndex].value;
-    //    console.log(selectedValue);
-    //    document.getElementById("selectedValue").value.text = selectedValue;
-    //    console.log(document.getElementById("selectedValue").value);
-    //}
 </script>

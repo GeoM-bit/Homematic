@@ -13,6 +13,13 @@ class Register {
         this.elements.formLastName().type(lastName)
         this.elements.formEmail().type(email)
     }
+    completeForm(firstName, lastName, email, password,CNP) {
+        this.elements.formFirstName().type(firstName)
+        this.elements.formLastName().type(lastName)
+        this.elements.formEmail().type(email)
+        this.elements.formPassword().type(password)
+        this.elements.formCNP().type(CNP)
+    }
 
     submitButton() {
         this.elements.submitButton().click();
