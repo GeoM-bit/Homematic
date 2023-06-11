@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="HomematicApp.Controllers.AdminController">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAEAAAAAQAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\AdminController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.Controllers.AuthenticationController">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABQAAIAQAAAAAAAAIAAAABAAAAAAUQAAAAAQE=</HashCode>
+      <FileName>Controllers\AuthenticationController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.Controllers.UserController">
+    <Position X="3" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAIAAAAAAECAQAAAQAAAAAAAgAAAIAAAAA=</HashCode>
+      <FileName>Controllers\UserController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.Mapper.ActionProfile">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mapper\ActionProfile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.Mapper.EspDataProfile">
+    <Position X="7.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mapper\EspDataProfile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.Mapper.ParameterProfile">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mapper\ParameterProfile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.Mapper.PresetProfile">
+    <Position X="9" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mapper\PresetProfile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.Mapper.UserProfile">
+    <Position X="5.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mapper\UserProfile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.ViewModels.ActionListModel">
+    <Position X="8" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ActionListModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.ViewModels.ActionModel">
+    <Position X="7.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ActionModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.ViewModels.ChartDataModel">
+    <Position X="0.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ChartDataModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.ViewModels.DeleteModel">
+    <Position X="2.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\DeleteModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.ViewModels.DropdownListValue">
+    <Position X="4" Y="10.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>ViewModels\DropdownListValue.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.ViewModels.EspDataModel">
+    <Position X="6" Y="8.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\EspDataModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.ViewModels.LoginModel">
+    <Position X="0.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\LoginModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.ViewModels.ParameterModel">
+    <Position X="5.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFEAAA=</HashCode>
+      <FileName>ViewModels\ParameterModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.ViewModels.PresetListModel">
+    <Position X="2.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAABAAIAAAAAAAAAAAAAIAAAAAAAAAAAAIA=</HashCode>
+      <FileName>ViewModels\PresetListModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.ViewModels.PresetModel">
+    <Position X="4" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAgAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>ViewModels\PresetModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.ViewModels.ResetPasswordModel">
+    <Position X="2.25" Y="8.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ResetPasswordEmail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.ViewModels.UserModel">
+    <Position X="0.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAABgCAAAAAAAABAAAIAAAA=</HashCode>
+      <FileName>ViewModels\UserModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.ViewModels.ViewUsersModel">
+    <Position X="4.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ViewUsersModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomematicApp.Context.Context.HomematicContext">
+    <Position X="0.5" Y="11.75" Width="1.75" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="HomematicApp.Context.DbModels.Action">
+    <Position X="4.25" Y="11.75" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="HomematicApp.Context.DbModels.EspData">
+    <Position X="5.75" Y="14.75" Width="1.75" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="HomematicApp.Context.DbModels.LoginUser">
+    <Position X="4" Y="14.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="HomematicApp.Context.DbModels.Parameter">
+    <Position X="6.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="HomematicApp.Context.DbModels.Preset">
+    <Position X="0.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="HomematicApp.Context.DbModels.User">
+    <Position X="2.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="HomematicApp.DataAccess.Repositories.AdminRepository">
+    <Position X="5.25" Y="17.75" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HomematicApp.DataAccess.Repositories.AuthenticationRepository">
+    <Position X="2.5" Y="17.75" Width="2.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HomematicApp.DataAccess.Repositories.UserRepository">
+    <Position X="0.5" Y="17.75" Width="1.75" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HomematicApp.Domain.DTOs.PresetModelDTO">
+    <Position X="2.25" Y="14.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="HomematicApp.Service.Services.HashService">
+    <Position X="0.5" Y="21" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HomematicApp.Service.Services.TemplateFillerService">
+    <Position X="2.25" Y="21" Width="1.75" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HomematicApp.Service.Services.TokenService">
+    <Position X="4.25" Y="21" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HomematicApp.Service.Services.EmailService.EmailSender">
+    <Position X="6" Y="21" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="HomematicApp.Service.Services.EmailService.SenderOptions">
+    <Position X="7.75" Y="21" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="HomematicApp.Domain.Abstractions.IAdminRepository">
+    <Position X="5.25" Y="19.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="HomematicApp.Domain.Abstractions.IAuthenticationRepository">
+    <Position X="7" Y="17.75" Width="2.25" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="HomematicApp.Domain.Abstractions.IUserRepository">
+    <Position X="9.5" Y="17.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="HomematicApp.Domain.Abstractions.IHashService">
+    <Position X="0.5" Y="22.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="HomematicApp.Domain.Abstractions.ITemplateFillerService">
+    <Position X="2.25" Y="22.75" Width="1.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="HomematicApp.Domain.Abstractions.ITokenService">
+    <Position X="4.25" Y="22.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
