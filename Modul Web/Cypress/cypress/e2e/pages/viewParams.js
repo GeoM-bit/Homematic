@@ -15,7 +15,7 @@ class ViewParams {
     }
 
     submitButton() {
-        this.elements.submitButton().click();
+        this.elements.submitButton().click()
     }
 }
 

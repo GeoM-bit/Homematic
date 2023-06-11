@@ -52,6 +52,7 @@ context('Homematic Automation Testing', () => {
             url: 'https://localhost:7274/Authentication/LoginUser',
             method: 'POST'
         }).as('loginRequest')
+
         cy.intercept({
             url: 'https://localhost:7274/User/ViewParameters',
             method: 'GET'
